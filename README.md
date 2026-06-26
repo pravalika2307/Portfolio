@@ -10,7 +10,7 @@ A premium, highly interactive, and production-ready portfolio website designed f
 ---
 
 ## 🔗 Live Demo
-Explore the live website here: **[My protfolio](https://pravalikapalle.vercel.app/)**
+Explore the live website here: **[My Portfolio](https://pravalikapalle.vercel.app/)**
 
 ---
 
