@@ -17,8 +17,8 @@ Explore the live website: **[https://pravalikapalle.vercel.app/](https://pravali
 
 ## 🚀 Key Highlights & Architecture
 
-- ⚡ **Interactive 3D System Topology (Three.js WebGL)**: An interactive 3D interconnected node matrix in the hero representing microservices, data graphs, and communication channels with smooth mouse-responsive parallax and dynamic packet orbits. Automatically throttled when out of viewport for optimal 60fps performance and low battery consumption.
-- 🎨 **Engineered Dark Aesthetic**: Sophisticated deep charcoal (`#0b0f17`), graphite surfaces, muted teal (`#14b8a6`), and slate-blue accents—avoiding generic purple/space templates.
+- ⚡ **Interactive 3D System Topology (Three.js WebGL)**: An interactive 3D interconnected artifact with polyhedral core, dual gyroscopic orbital rings, and dynamic telemetry satellites in Obsidian & Burnt Orange. Mouse-responsive with spring inertia, scroll-linked depth, and automatic viewport pause via `IntersectionObserver`.
+- 🎨 **Obsidian + Burnt Orange Aesthetic**: Distinctive, warm, dark engineering identity (`#0B0B0D`, `#151518`, `#1C1C20`, `#FF6B35`, `#FFB36B`, `#F5F2EE`) with editorial typography (Syne, Space Grotesk, JetBrains Mono, Inter).
 - 🌟 **Tiered Visual Project Showcase**:
   - **Flagship Spotlight (SynapseIQ)**: AI Decision Intelligence Platform powered by Google Gemini API with built-in client-side analytical fallback logic and interactive brief simulator.
   - **Core Engineering Platforms**:
@@ -57,7 +57,7 @@ Explore the live website: **[https://pravalikapalle.vercel.app/](https://pravali
 ```text
 Portfolio/
 ├── public/                  # Static assets
-│   ├── Pravalika_Palle_Resume.pdf
+│   ├── resume.pdf
 │   ├── favicon.svg
 │   ├── robots.txt
 │   └── sitemap.xml

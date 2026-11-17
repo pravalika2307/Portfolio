@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Copy, Check, Send, Download, FileText, MapPin, ArrowUpRight } from 'lucide-react';
+import { Mail, Copy, Check, Send, Download, ArrowUpRight, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
 import { CONFIG } from '../config';
 
@@ -43,50 +43,52 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-28 px-6 relative bg-[#0b0f17]">
+    <section id="contact" className="py-24 px-6 relative bg-[#0B0B0D]">
       {/* Subtle Glow */}
-      <div className="absolute top-1/2 left-1/3 w-[450px] h-[450px] bg-teal-500/5 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#FF6B35]/4 blur-[160px] pointer-events-none rounded-full" />
 
       <div className="max-w-6xl mx-auto space-y-16">
         
         {/* Section Header */}
         <div className="space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-mono-code text-teal-400">
-            <span>[ SECTION: CONTACT & CONNECT ]</span>
+          <div className="flex items-center space-x-3 text-xs font-technical-mono uppercase tracking-widest text-[#FF6B35]">
+            <span>// 07</span>
+            <span className="w-8 h-px bg-[#FF6B35]/40" />
+            <span>Direct Communication</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white">
-            Let's Discuss Opportunities
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[#F5F2EE]">
+            Initiate Conversation
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
-            Interested in software engineering roles, full-stack development, applied AI initiatives, or technical discussions. Reach out directly or send a message below.
+          <p className="text-[#99969A] text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
+            Available for software engineering roles, full-stack systems development, and applied AI initiatives. Reach out directly or send a message below.
           </p>
         </div>
 
         {/* Contact Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Left Column: Direct Channels & Actions */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Left Column: Direct Transmission & Links */}
+          <div className="lg:col-span-5 space-y-5">
             
-            {/* Email Card with One-Click Copy */}
-            <div className="engineering-panel rounded-2xl p-6 border border-slate-800 space-y-4">
+            {/* Email Card with Quick Copy */}
+            <div className="obsidian-panel rounded-2xl p-6 border border-white/5 space-y-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 text-xs font-mono-code text-teal-400">
+                <div className="flex items-center space-x-2 text-xs font-technical-mono text-[#FF6B35]">
                   <Mail className="w-4 h-4" />
-                  <span>Direct Email</span>
+                  <span>Direct Transmission</span>
                 </div>
                 <button
                   onClick={handleCopyEmail}
-                  className="flex items-center space-x-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono-code text-slate-300 hover:text-white hover:border-slate-700 transition-colors cursor-pointer"
+                  className="flex items-center space-x-1 px-2.5 py-1 rounded-md bg-[#151518] border border-white/5 text-[11px] font-technical-mono text-[#99969A] hover:text-[#F5F2EE] hover:border-white/10 transition-colors cursor-pointer"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-teal-400" />
-                      <span className="text-teal-400">Copied!</span>
+                      <Check className="w-3.5 h-3.5 text-[#FF6B35]" />
+                      <span className="text-[#FF6B35]">Copied!</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5 text-slate-400" />
+                      <Copy className="w-3.5 h-3.5 text-[#99969A]" />
                       <span>Copy</span>
                     </>
                   )}
@@ -96,31 +98,31 @@ export default function Contact() {
               <div>
                 <a
                   href={`mailto:${CONFIG.email}`}
-                  className="text-base sm:text-lg font-mono-code font-bold text-white hover:text-teal-300 transition-colors break-all"
+                  className="text-base sm:text-lg font-technical-mono font-bold text-[#F5F2EE] hover:text-[#FFB36B] transition-colors break-all"
                 >
                   {CONFIG.email}
                 </a>
-                <p className="text-xs text-slate-400 mt-1">
-                  Fastest response channel for inquiries and interview scheduling.
+                <p className="text-xs text-[#99969A] mt-1 font-sans">
+                  Fastest channel for direct inquiries and technical interview scheduling.
                 </p>
               </div>
             </div>
 
-            {/* Social & Professional Links */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Social & Professional Ledger */}
+            <div className="grid grid-cols-2 gap-4 font-technical-mono">
               <a
                 href={CONFIG.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="engineering-panel engineering-panel-interactive rounded-2xl p-5 border border-slate-800 flex flex-col justify-between group"
+                className="obsidian-panel obsidian-panel-interactive rounded-2xl p-5 border border-white/5 flex flex-col justify-between group"
               >
                 <div className="flex items-center justify-between">
-                  <GithubIcon className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
-                  <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-teal-400 transition-colors" />
+                  <GithubIcon className="w-5 h-5 text-[#99969A] group-hover:text-[#F5F2EE] transition-colors" />
+                  <ArrowUpRight className="w-4 h-4 text-[#99969A] group-hover:text-[#FF6B35] transition-colors" />
                 </div>
                 <div className="pt-4">
-                  <span className="text-xs font-mono-code text-slate-400">GitHub</span>
-                  <div className="text-sm font-bold text-white mt-0.5 truncate">@pravalika2307</div>
+                  <span className="text-xs text-[#99969A]">GitHub</span>
+                  <div className="text-sm font-bold text-[#F5F2EE] mt-0.5 truncate">@pravalika2307</div>
                 </div>
               </a>
 
@@ -128,23 +130,23 @@ export default function Contact() {
                 href={CONFIG.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="engineering-panel engineering-panel-interactive rounded-2xl p-5 border border-slate-800 flex flex-col justify-between group"
+                className="obsidian-panel obsidian-panel-interactive rounded-2xl p-5 border border-white/5 flex flex-col justify-between group"
               >
                 <div className="flex items-center justify-between">
-                  <LinkedinIcon className="w-5 h-5 text-sky-400" />
-                  <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-teal-400 transition-colors" />
+                  <LinkedinIcon className="w-5 h-5 text-[#FFB36B]" />
+                  <ArrowUpRight className="w-4 h-4 text-[#99969A] group-hover:text-[#FF6B35] transition-colors" />
                 </div>
                 <div className="pt-4">
-                  <span className="text-xs font-mono-code text-slate-400">LinkedIn</span>
-                  <div className="text-sm font-bold text-white mt-0.5 truncate">Pravalika Palle</div>
+                  <span className="text-xs text-[#99969A]">LinkedIn</span>
+                  <div className="text-sm font-bold text-[#F5F2EE] mt-0.5 truncate">Pravalika Palle</div>
                 </div>
               </a>
             </div>
 
             {/* Location & Resume Box */}
-            <div className="engineering-panel rounded-2xl p-6 border border-slate-800 space-y-4">
-              <div className="flex items-center space-x-2 text-xs font-mono-code text-slate-400">
-                <MapPin className="w-4 h-4 text-teal-400" />
+            <div className="obsidian-panel rounded-2xl p-6 border border-white/5 space-y-4 font-technical-mono">
+              <div className="flex items-center space-x-2 text-xs text-[#99969A]">
+                <MapPin className="w-4 h-4 text-[#FF6B35]" />
                 <span>Base Location: Hyderabad, India</span>
               </div>
 
@@ -153,52 +155,52 @@ export default function Contact() {
                   href={CONFIG.resumePath}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-200 hover:text-white hover:border-slate-700 transition-colors"
+                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-[#151518] border border-white/5 text-xs font-semibold text-[#F5F2EE] hover:text-white hover:border-[#FF6B35]/50 transition-colors"
                 >
-                  <FileText className="w-3.5 h-3.5 text-teal-400" />
                   <span>View Resume</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
                 </a>
 
                 <a
                   href={CONFIG.resumePath}
                   download={CONFIG.resumeFileName}
-                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-teal-500/10 border border-teal-500/30 text-xs font-semibold text-teal-300 hover:bg-teal-500/20 transition-colors cursor-pointer"
+                  className="flex-1 flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] text-xs font-bold transition-colors cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Download PDF</span>
+                  <span>Download CV</span>
                 </a>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Contact Message Form */}
+          {/* Right Column: Transmission Form */}
           <div className="lg:col-span-7">
-            <div className="engineering-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl relative">
-              <h3 className="text-xl font-bold font-display text-white mb-2">
-                Send a Message
+            <div className="obsidian-panel rounded-3xl p-6 sm:p-8 border border-white/5 shadow-xl relative">
+              <h3 className="text-xl font-bold font-display text-[#F5F2EE] mb-1">
+                Dispatch Message
               </h3>
-              <p className="text-xs font-mono-code text-slate-400 mb-6">
+              <p className="text-xs font-technical-mono text-[#99969A] mb-6">
                 Direct transmission to pravalikareddy722@gmail.com
               </p>
 
               {submitted ? (
-                <div className="p-6 rounded-2xl bg-teal-500/10 border border-teal-500/30 text-center space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center mx-auto">
+                <div className="p-6 rounded-2xl bg-[#FF6B35]/10 border border-[#FF6B35]/30 text-center space-y-3">
+                  <div className="w-10 h-10 rounded-full bg-[#FF6B35]/20 text-[#FF6B35] flex items-center justify-center mx-auto">
                     <Check className="w-5 h-5" />
                   </div>
-                  <h4 className="text-base font-bold text-white font-display">
-                    Message Dispatched Successfully
+                  <h4 className="text-base font-bold text-[#F5F2EE] font-display">
+                    Transmission Dispatched Successfully
                   </h4>
-                  <p className="text-xs text-slate-300 max-w-sm mx-auto">
-                    Thank you for reaching out! I will review your message and reply as soon as possible.
+                  <p className="text-xs text-[#99969A] max-w-sm mx-auto font-sans">
+                    Thank you for reaching out! I will review your message and reply promptly.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 font-technical-mono">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label htmlFor="contact-name" className="text-xs font-mono-code text-slate-300">
+                      <label htmlFor="contact-name" className="text-xs text-[#99969A]">
                         Your Name *
                       </label>
                       <input
@@ -206,14 +208,14 @@ export default function Contact() {
                         type="text"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="e.g. Alex Morgan"
-                        className="w-full bg-slate-900 border border-slate-800 focus:border-teal-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 outline-none transition-colors"
+                        placeholder="Alex Morgan"
+                        className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors"
                       />
-                      {errors.name && <span className="text-[11px] text-rose-400 font-mono-code">{errors.name}</span>}
+                      {errors.name && <span className="text-[11px] text-[#FF6B35]">{errors.name}</span>}
                     </div>
 
                     <div className="space-y-1">
-                      <label htmlFor="contact-email" className="text-xs font-mono-code text-slate-300">
+                      <label htmlFor="contact-email" className="text-xs text-[#99969A]">
                         Your Email *
                       </label>
                       <input
@@ -222,14 +224,14 @@ export default function Contact() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="alex@company.com"
-                        className="w-full bg-slate-900 border border-slate-800 focus:border-teal-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 outline-none transition-colors"
+                        className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors"
                       />
-                      {errors.email && <span className="text-[11px] text-rose-400 font-mono-code">{errors.email}</span>}
+                      {errors.email && <span className="text-[11px] text-[#FF6B35]">{errors.email}</span>}
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label htmlFor="contact-subject" className="text-xs font-mono-code text-slate-300">
+                    <label htmlFor="contact-subject" className="text-xs text-[#99969A]">
                       Subject
                     </label>
                     <input
@@ -237,13 +239,13 @@ export default function Contact() {
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="Software Engineer Role / Project Collaboration"
-                      className="w-full bg-slate-900 border border-slate-800 focus:border-teal-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 outline-none transition-colors"
+                      placeholder="Software Engineer Role / Project"
+                      className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label htmlFor="contact-message" className="text-xs font-mono-code text-slate-300">
+                    <label htmlFor="contact-message" className="text-xs text-[#99969A]">
                       Message *
                     </label>
                     <textarea
@@ -252,21 +254,21 @@ export default function Contact() {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Hi Pravalika, I came across your portfolio and wanted to discuss..."
-                      className="w-full bg-slate-900 border border-slate-800 focus:border-teal-500 rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 outline-none transition-colors resize-none"
+                      className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors resize-none font-sans"
                     />
-                    {errors.message && <span className="text-[11px] text-rose-400 font-mono-code">{errors.message}</span>}
+                    {errors.message && <span className="text-[11px] text-[#FF6B35]">{errors.message}</span>}
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-teal-500/20 disabled:opacity-70"
+                    className="w-full py-3.5 rounded-xl bg-[#FF6B35] hover:bg-[#FFB36B] text-[#0B0B0D] font-bold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#FF6B35]/20 disabled:opacity-70"
                   >
                     {isSubmitting ? (
-                      <span>Sending message...</span>
+                      <span>Transmitting...</span>
                     ) : (
                       <>
-                        <span>Send Message</span>
+                        <span>Send Transmission</span>
                         <Send className="w-3.5 h-3.5" />
                       </>
                     )}

@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Download, FileText, Activity, Code2, Loader2 } from 'lucide-react';
+import { ArrowDown, Download, ArrowUpRight, Activity, Code2, Loader2 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
 import { CONFIG } from '../config';
 
@@ -10,7 +10,7 @@ const titles = [
   'Software Engineer',
   'Full-Stack Developer',
   'Applied AI & GenAI Enthusiast',
-  'Backend & Systems Builder'
+  'Systems & API Builder'
 ];
 
 export default function Hero() {
@@ -20,8 +20,8 @@ export default function Hero() {
 
   useEffect(() => {
     const fullText = titles[typedTitleIndex];
-    const speed = isDeleting ? 30 : 60;
-    const holdDelay = isDeleting ? 30 : 2000;
+    const speed = isDeleting ? 25 : 55;
+    const holdDelay = isDeleting ? 25 : 2200;
 
     const timer = setTimeout(() => {
       if (!isDeleting && currentText === fullText) {
@@ -42,29 +42,32 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] flex items-center pt-28 pb-16 px-6 technical-grid overflow-hidden"
+      className="relative min-h-[94vh] flex items-center pt-28 pb-16 px-6 obsidian-grid overflow-hidden"
     >
-      {/* Background Accent Gradients */}
-      <div className="absolute top-1/4 left-1/3 -translate-x-1/2 w-[500px] h-[500px] bg-teal-500/5 blur-[140px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] bg-sky-500/5 blur-[130px] pointer-events-none rounded-full" />
+      {/* Warm Ambient Glow Highlights */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[550px] h-[550px] bg-[#FF6B35]/5 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#FFB36B]/4 blur-[140px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
-          {/* Left Column: Core Identity & Narrative */}
+          {/* Left Column: Bold Editorial Introduction */}
           <div className="lg:col-span-7 space-y-7 z-10">
-            {/* Live Status Pill */}
+            
+            {/* Status Indicator */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs text-slate-300 font-mono-code"
+              className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-[#1C1C20]/90 border border-white/5 text-xs text-[#F5F2EE] font-technical-mono"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B35] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6B35]"></span>
               </span>
-              <span>Available for Software Engineering & AI Roles</span>
+              <span className="text-[11px] uppercase tracking-wider text-[#99969A]">
+                Available for Software Engineering Roles
+              </span>
             </motion.div>
 
             {/* Name & Headline */}
@@ -74,48 +77,48 @@ export default function Hero() {
               transition={{ duration: 0.55, delay: 0.1 }}
               className="space-y-3"
             >
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-white leading-tight">
-                {CONFIG.name}
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display-hero tracking-tight text-[#F5F2EE] leading-none">
+                PRAVALIKA PALLE
               </h1>
               
-              <div className="h-9 sm:h-11 flex items-center text-xl sm:text-2xl font-bold font-display text-teal-400">
+              <div className="h-9 sm:h-11 flex items-center text-xl sm:text-2xl font-bold font-technical-tag text-[#FF6B35]">
                 <span>{currentText}</span>
                 <span className="typing-caret" />
               </div>
             </motion.div>
 
-            {/* Concise Mission / Bio */}
+            {/* Concise Mission / Hero Statement */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.2 }}
-              className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal"
+              className="text-base sm:text-lg text-[#99969A] leading-relaxed max-w-2xl font-normal"
             >
-              I build reliable full-stack applications, intelligent automation platforms, and scalable backend services with modern engineering rigor. Currently engineering sales & marketing automation systems at <span className="text-white font-semibold">Agile Receivables</span> and holding an MCA (2026) alongside a 9.1 CGPA in B.Sc Computer Science & Cognitive Systems.
+              {CONFIG.heroStatement}
             </motion.p>
 
-            {/* Quick Metrics Bar */}
+            {/* Architectural Status Strip */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.25 }}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 max-w-xl"
+              className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 max-w-xl font-technical-mono text-xs"
             >
-              <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-                <div className="text-[11px] font-mono-code text-slate-400">Current Role</div>
-                <div className="text-xs font-semibold text-slate-200 mt-0.5 truncate">Agile Receivables Intern</div>
+              <div className="p-3 rounded-xl bg-[#151518]/90 border border-white/5">
+                <div className="text-[10px] text-[#99969A] uppercase tracking-wider">Current</div>
+                <div className="text-xs font-semibold text-[#F5F2EE] mt-0.5 truncate">Agile Receivables</div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-                <div className="text-[11px] font-mono-code text-slate-400">Academic Merit</div>
-                <div className="text-xs font-semibold text-slate-200 mt-0.5">MCA '26 • CGPA 9.1</div>
+              <div className="p-3 rounded-xl bg-[#151518]/90 border border-white/5">
+                <div className="text-[10px] text-[#99969A] uppercase tracking-wider">Academics</div>
+                <div className="text-xs font-semibold text-[#FFB36B] mt-0.5">MCA '26 • 9.1 CGPA</div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80 col-span-2 sm:col-span-1">
-                <div className="text-[11px] font-mono-code text-slate-400">Core Focus</div>
-                <div className="text-xs font-semibold text-slate-200 mt-0.5">Full-Stack & Applied AI</div>
+              <div className="p-3 rounded-xl bg-[#151518]/90 border border-white/5 col-span-2 sm:col-span-1">
+                <div className="text-[10px] text-[#99969A] uppercase tracking-wider">Discipline</div>
+                <div className="text-xs font-semibold text-[#F5F2EE] mt-0.5">Systems & GenAI</div>
               </div>
             </motion.div>
 
-            {/* Action Buttons */}
+            {/* Prominent Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -128,9 +131,9 @@ export default function Hero() {
                   e.preventDefault();
                   document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-5 py-3 rounded-xl text-xs font-semibold bg-teal-500 text-slate-950 hover:bg-teal-400 shadow-md shadow-teal-500/20 transition-all duration-200 flex items-center space-x-2 cursor-pointer"
+                className="px-5 py-3 rounded-xl text-xs font-technical-mono font-bold bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] transition-all duration-200 flex items-center space-x-2 cursor-pointer shadow-lg shadow-[#FF6B35]/15"
               >
-                <span>Explore Featured Projects</span>
+                <span>View Projects</span>
                 <ArrowDown className="w-3.5 h-3.5" />
               </a>
 
@@ -138,19 +141,19 @@ export default function Hero() {
                 href={CONFIG.resumePath}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-3 rounded-xl text-xs font-semibold bg-slate-900 text-slate-200 hover:text-white hover:bg-slate-850 border border-slate-800 hover:border-slate-700 transition-all duration-200 flex items-center space-x-2"
+                className="px-5 py-3 rounded-xl text-xs font-technical-mono font-semibold bg-[#1C1C20] text-[#F5F2EE] hover:text-white border border-white/10 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 transition-all duration-200 flex items-center space-x-2"
               >
-                <FileText className="w-3.5 h-3.5 text-teal-400" />
                 <span>View Resume</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
               </a>
 
               <a
                 href={CONFIG.resumePath}
                 download={CONFIG.resumeFileName}
-                className="px-4 py-3 rounded-xl text-xs font-semibold bg-slate-900/60 text-slate-300 hover:text-white border border-slate-800/80 hover:border-slate-700 transition-all duration-200 flex items-center space-x-2 cursor-pointer"
+                className="px-4 py-3 rounded-xl text-xs font-technical-mono font-semibold bg-[#151518] text-[#99969A] hover:text-[#F5F2EE] border border-white/5 hover:border-white/15 transition-all duration-200 flex items-center space-x-1.5 cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>PDF</span>
+                <span>Download CV</span>
               </a>
 
               <div className="flex items-center space-x-2 pl-2">
@@ -159,7 +162,7 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub Profile"
-                  className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-all duration-200"
+                  className="p-3 rounded-xl bg-[#1C1C20] border border-white/5 text-[#99969A] hover:text-[#F5F2EE] hover:border-white/15 transition-all duration-200"
                 >
                   <GithubIcon className="w-4 h-4" />
                 </a>
@@ -168,7 +171,7 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn Profile"
-                  className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-sky-400 hover:border-slate-700 transition-all duration-200"
+                  className="p-3 rounded-xl bg-[#1C1C20] border border-white/5 text-[#99969A] hover:text-[#FFB36B] hover:border-white/15 transition-all duration-200"
                 >
                   <LinkedinIcon className="w-4 h-4" />
                 </a>
@@ -176,59 +179,59 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column: Interactive 3D Connected Systems Visual */}
+          {/* Right Column: 3D Connected Systems Interactive Centerpiece */}
           <div className="lg:col-span-5 relative">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="engineering-panel rounded-3xl p-4 md:p-6 relative overflow-hidden border border-slate-800/90 shadow-2xl"
+              className="obsidian-panel rounded-3xl p-4 md:p-6 relative overflow-hidden border border-white/10 shadow-2xl"
             >
               {/* Window Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 font-mono-code text-[11px] text-slate-400">
+              <div className="flex items-center justify-between pb-3 border-b border-white/5 font-technical-mono text-[11px] text-[#99969A]">
                 <div className="flex items-center space-x-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                  <span className="text-slate-500 pl-1">topology_mesh.3d</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B35]/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFB36B]/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                  <span className="text-[#99969A] pl-1 font-technical-mono">topology_mesh.3d</span>
                 </div>
-                <div className="flex items-center space-x-1.5 text-teal-400">
+                <div className="flex items-center space-x-1.5 text-[#FF6B35]">
                   <Activity className="w-3.5 h-3.5 animate-pulse" />
-                  <span>Interactive Node Matrix</span>
+                  <span>Interactive 3D Engine</span>
                 </div>
               </div>
 
-              {/* 3D Canvas Container */}
+              {/* 3D Canvas */}
               <div className="h-[340px] sm:h-[400px] w-full relative">
                 <Suspense
                   fallback={
-                    <div className="w-full h-full flex flex-col items-center justify-center space-y-2 text-slate-500 font-mono-code text-xs">
-                      <Loader2 className="w-6 h-6 animate-spin text-teal-400" />
-                      <span>Initializing WebGL Scene...</span>
+                    <div className="w-full h-full flex flex-col items-center justify-center space-y-2 text-[#99969A] font-technical-mono text-xs">
+                      <Loader2 className="w-6 h-6 animate-spin text-[#FF6B35]" />
+                      <span>Loading WebGL Scene...</span>
                     </div>
                   }
                 >
                   <ThreeCanvas />
                 </Suspense>
 
-                {/* Micro-telemetry Overlays */}
-                <div className="absolute bottom-3 left-3 bg-slate-950/85 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-lg text-[10px] font-mono-code text-slate-300 flex items-center space-x-2 pointer-events-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-ping" />
-                  <span>39 Services • 128 Edges</span>
+                {/* Micro Telemetry Badges */}
+                <div className="absolute bottom-3 left-3 bg-[#0B0B0D]/85 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-lg text-[10px] font-technical-mono text-[#F5F2EE] flex items-center space-x-2 pointer-events-none">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B35] animate-ping" />
+                  <span>Connected Architecture Mesh</span>
                 </div>
 
-                <div className="absolute top-3 right-3 bg-slate-950/85 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-lg text-[10px] font-mono-code text-slate-300 pointer-events-none">
-                  <span>FPS: 60 • Three.js WebGL</span>
+                <div className="absolute top-3 right-3 bg-[#0B0B0D]/85 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-lg text-[10px] font-technical-mono text-[#99969A] pointer-events-none">
+                  <span>60 FPS • Three.js</span>
                 </div>
               </div>
 
-              {/* Bottom Spec Footer */}
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono-code text-slate-400">
+              {/* Footer Spec */}
+              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-technical-mono text-[#99969A]">
                 <div className="flex items-center space-x-1.5">
-                  <Code2 className="w-3.5 h-3.5 text-teal-400" />
+                  <Code2 className="w-3.5 h-3.5 text-[#FF6B35]" />
                   <span>Python • FastAPI • React • GenAI</span>
                 </div>
-                <span className="text-slate-500 text-[10px]">Drag to rotate</span>
+                <span className="text-[#99969A]/80 text-[10px]">Drag to orbit</span>
               </div>
             </motion.div>
           </div>

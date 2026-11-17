@@ -7,13 +7,13 @@ import {
 import { CONFIG } from '../config';
 
 const categoryIcons = {
-  'Programming': <Code2 className="w-5 h-5 text-teal-400" />,
-  'Frontend': <Layout className="w-5 h-5 text-sky-400" />,
-  'Backend': <Server className="w-5 h-5 text-emerald-400" />,
-  'Databases': <Database className="w-5 h-5 text-teal-300" />,
-  'AI & GenAI': <BrainCircuit className="w-5 h-5 text-teal-400" />,
-  'Testing & Quality': <CheckSquare className="w-5 h-5 text-sky-300" />,
-  'Tools & Platforms': <Wrench className="w-5 h-5 text-teal-400" />
+  'Programming': <Code2 className="w-5 h-5 text-[#FF6B35]" />,
+  'Frontend': <Layout className="w-5 h-5 text-[#FFB36B]" />,
+  'Backend': <Server className="w-5 h-5 text-[#FF6B35]" />,
+  'Databases': <Database className="w-5 h-5 text-[#FFB36B]" />,
+  'AI & GenAI': <BrainCircuit className="w-5 h-5 text-[#FF6B35]" />,
+  'Testing & Quality': <CheckSquare className="w-5 h-5 text-[#FFB36B]" />,
+  'Tools & Platforms': <Wrench className="w-5 h-5 text-[#FF6B35]" />
 };
 
 export default function Skills() {
@@ -41,35 +41,37 @@ export default function Skills() {
   });
 
   return (
-    <section id="skills" className="py-28 px-6 relative bg-[#0b0f17]">
+    <section id="skills" className="py-24 px-6 relative bg-[#0B0B0D]">
       {/* Subtle Glow */}
-      <div className="absolute top-1/4 left-1/3 w-[450px] h-[450px] bg-teal-500/5 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-[#FF6B35]/4 blur-[160px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-slate-800/80">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-white/5">
           <div className="space-y-3">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-mono-code text-teal-400">
-              <span>[ SECTION: SKILLS ]</span>
+            <div className="flex items-center space-x-3 text-xs font-technical-mono uppercase tracking-widest text-[#FF6B35]">
+              <span>// 05</span>
+              <span className="w-8 h-px bg-[#FF6B35]/40" />
+              <span>Technical Capabilities</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white">
-              Technical Capabilities
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[#F5F2EE]">
+              Technical Repertoire
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
-              Curated technical stack representing active production proficiency across programming, frontend architecture, backend services, and AI workflows.
+            <p className="text-[#99969A] text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
+              Active engineering competencies across programming languages, backend frameworks, data layers, and applied AI automation.
             </p>
           </div>
 
           {/* Search Box */}
           <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#99969A]" />
             <input
               type="text"
               placeholder="Search technologies..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-slate-900/90 border border-slate-800 focus:border-teal-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 font-mono-code transition-colors outline-none"
+              className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl pl-10 pr-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A] font-technical-mono transition-colors outline-none"
             />
           </div>
         </div>
@@ -80,10 +82,10 @@ export default function Skills() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium font-mono-code transition-all duration-200 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-technical-mono font-semibold transition-all duration-200 cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-teal-500 text-slate-950 font-bold shadow-sm'
-                  : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-[#FF6B35] text-[#0B0B0D] font-bold shadow-md shadow-[#FF6B35]/20'
+                  : 'bg-[#151518] text-[#99969A] hover:text-[#F5F2EE] border border-white/5'
               }`}
             >
               {cat}
@@ -96,23 +98,23 @@ export default function Skills() {
           {filteredCategories.map((cat, idx) => (
             <motion.div
               key={cat.category}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.4, delay: idx * 0.06 }}
-              className="engineering-panel engineering-panel-interactive rounded-2xl p-6 border border-slate-800 flex flex-col justify-between group"
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: idx * 0.05 }}
+              className="obsidian-panel obsidian-panel-interactive rounded-2xl p-6 border border-white/5 flex flex-col justify-between group"
             >
               <div className="space-y-4">
                 {/* Header */}
-                <div className="flex items-center space-x-3 pb-3 border-b border-slate-800/80">
-                  <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:scale-105 transition-transform">
-                    {categoryIcons[cat.category] || <Code2 className="w-5 h-5 text-teal-400" />}
+                <div className="flex items-center space-x-3 pb-3 border-b border-white/5">
+                  <div className="w-9 h-9 rounded-xl bg-[#151518] border border-white/5 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    {categoryIcons[cat.category] || <Code2 className="w-5 h-5 text-[#FF6B35]" />}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold font-display text-white group-hover:text-teal-300 transition-colors">
+                    <h3 className="text-base font-bold font-display text-[#F5F2EE] group-hover:text-[#FFB36B] transition-colors">
                       {cat.category}
                     </h3>
-                    <p className="text-[11px] font-mono-code text-slate-400">
+                    <p className="text-[11px] font-technical-mono text-[#99969A]">
                       {cat.description}
                     </p>
                   </div>
@@ -123,7 +125,7 @@ export default function Skills() {
                   {(searchTerm.trim() ? cat.matchingSkills : cat.skills).map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-mono-code text-slate-200 group-hover:border-slate-700 transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-[#151518] border border-white/5 text-xs font-technical-mono text-[#F5F2EE] group-hover:border-white/10 transition-colors"
                     >
                       {skill}
                     </span>
@@ -132,9 +134,9 @@ export default function Skills() {
               </div>
 
               {/* Count Footer */}
-              <div className="pt-4 mt-6 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono-code text-slate-400">
+              <div className="pt-4 mt-6 border-t border-white/5 flex items-center justify-between text-[11px] font-technical-mono text-[#99969A]">
                 <span>{cat.skills.length} competencies</span>
-                <span className="text-teal-400 font-semibold">Production Ready</span>
+                <span className="text-[#FF6B35] font-semibold">Active Practice</span>
               </div>
             </motion.div>
           ))}
