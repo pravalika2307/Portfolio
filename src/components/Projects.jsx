@@ -1,336 +1,366 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ExternalLink, Sparkles, Award, Map, BarChart3, Users, Clock, 
-  Database, Target, Zap, Network, GitBranch, TrendingUp, CheckCircle2, 
-  Code2, Atom, Globe, KeyRound, Brain, Server, Cpu, Layout
-} from 'lucide-react';
+import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { GithubIcon } from './BrandIcons';
 import { CONFIG } from '../config';
 
-// Factual projects list
-const projects = [
-  {
-    id: 1,
-    title: 'TalentLens AI',
-    badge: '🏆 Hackathon Project',
-    badgeColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.08)]',
-    description: 'Built TalentLens AI, an AI-powered talent intelligence platform that analyzes candidate profiles, performs semantic search, and generates personalized career insights.',
-    icon: <Sparkles className="w-5 h-5 text-blue-455" />,
-    tech: ['Python', 'FastAPI', 'React.js', 'Valkey', 'BreethAI', 'REST APIs'],
-    metrics: [
-      { label: '100+ Candidate Profiles', icon: <Users className="w-3.5 h-3.5 text-blue-405" /> },
-      { label: 'Semantic Search', icon: <Sparkles className="w-3.5 h-3.5 text-indigo-405" /> },
-      { label: 'Built in 24 Hours', icon: <Clock className="w-3.5 h-3.5 text-amber-450" /> }
-    ],
-    github: 'https://github.com/pravalika2307/talent-lens',
-    demo: null,
-    featured: true
-  },
-  {
-    id: 2,
-    title: 'HRlytics AI',
-    badge: '🏆 Hackathon Project',
-    badgeColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.08)]',
-    description: 'Developed HRlytics AI, a workforce analytics platform for HR cost prediction, project tracking, and interactive business dashboards.',
-    icon: <BarChart3 className="w-5 h-5 text-indigo-455" />,
-    tech: ['Python', 'FastAPI', 'React.js', 'SQLite', 'SQLAlchemy', 'REST APIs'],
-    metrics: [
-      { label: '5,000+ Records', icon: <Database className="w-3.5 h-3.5 text-indigo-405" /> },
-      { label: '85% Prediction Accuracy', icon: <Target className="w-3.5 h-3.5 text-rose-455" /> },
-      { label: 'SQL Analytics', icon: <Code2 className="w-3.5 h-3.5 text-blue-405" /> }
-    ],
-    github: 'https://github.com/pravalika2307/HRlytics-AI',
-    demo: null,
-    featured: true
-  },
-  {
-    id: 3,
-    title: 'Shortest Path Visualizer',
-    badge: '💻 Personal Project',
-    badgeColor: 'text-teal-400 bg-teal-500/10 border-teal-500/20 shadow-[0_0_15px_rgba(20,184,166,0.08)]',
-    description: 'Built an interactive visualization tool for BFS, Dijkstra, and A* algorithms with real-time graph exploration.',
-    icon: <Map className="w-5 h-5 text-teal-455" />,
-    tech: ['Python', 'Streamlit', 'SQLite', 'BFS', 'Dijkstra', 'A*'],
-    metrics: [
-      { label: 'BFS • Dijkstra • A*', icon: <Network className="w-3.5 h-3.5 text-teal-405" /> },
-      { label: '50+ Nodes', icon: <GitBranch className="w-3.5 h-3.5 text-blue-405" /> },
-      { label: 'Interactive Visualization', icon: <Sparkles className="w-3.5 h-3.5 text-indigo-405" /> }
-    ],
-    github: 'https://github.com/pravalika2307/Shortest-Path-Visualizer',
-    demo: null,
-    featured: false
-  },
-  {
-    id: 4,
-    title: 'Employee Salary Prediction',
-    badge: '💼 Internship Project',
-    badgeColor: 'text-blue-400 bg-blue-500/10 border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.08)]',
-    description: 'Developed a machine learning application for employee salary prediction using structured workforce datasets.',
-    icon: <Award className="w-5 h-5 text-purple-455" />,
-    tech: ['Python', 'SQL', 'Pandas', 'NumPy', 'Scikit-learn'],
-    metrics: [
-      { label: 'IBM Internship', icon: <Award className="w-3.5 h-3.5 text-purple-405" /> },
-      { label: '18% Accuracy Improvement', icon: <TrendingUp className="w-3.5 h-3.5 text-purple-405" /> },
-      { label: 'Python + SQL', icon: <Code2 className="w-3.5 h-3.5 text-blue-405" /> }
-    ],
-    github: 'https://github.com/pravalika2307/employee-salary-prediction_app',
-    demo: null,
-    featured: false
-  }
-];
-
-// Tech stack logo dictionary
-const techIcons = {
-  'Python': <Code2 className="w-3 h-3 text-blue-400" />,
-  'FastAPI': <Zap className="w-3 h-3 text-emerald-400" />,
-  'React.js': <Atom className="w-3 h-3 text-sky-400" />,
-  'Valkey': <KeyRound className="w-3 h-3 text-red-500" />,
-  'BreethAI': <Brain className="w-3 h-3 text-teal-400" />,
-  'REST APIs': <Globe className="w-3 h-3 text-sky-400" />,
-  'SQLite': <Database className="w-3 h-3 text-indigo-400" />,
-  'SQL': <Database className="w-3 h-3 text-emerald-400" />,
-  'SQLAlchemy': <Server className="w-3 h-3 text-gray-400" />,
-  'Pandas': <Database className="w-3 h-3 text-blue-400" />,
-  'NumPy': <Cpu className="w-3 h-3 text-sky-500" />,
-  'Scikit-learn': <Brain className="w-3 h-3 text-teal-400" />,
-  'Streamlit': <Layout className="w-3 h-3 text-orange-400" />,
-  'BFS': <Network className="w-3 h-3 text-teal-450" />,
-  'Dijkstra': <Network className="w-3 h-3 text-blue-450" />,
-  'A*': <Network className="w-3 h-3 text-purple-455" />
-};
-
-// Interactive visual CSS mockups instead of placeholders
-function ProjectMockup({ id }) {
-  if (id === 1) {
-    return (
-      <div className="w-full h-36 bg-gray-950/80 rounded-2xl border border-gray-850 p-4 flex flex-col font-mono text-[10px] space-y-2 select-none overflow-hidden relative group-hover:border-blue-500/20 transition-all duration-300">
-        <div className="flex items-center justify-between border-b border-gray-900 pb-2 mb-1.5">
-          <div className="flex items-center space-x-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500/70" />
-            <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
-            <span className="w-2 h-2 rounded-full bg-green-500/70" />
-          </div>
-          <span className="text-gray-600 text-[8px]">talentlens-ai.dev/console</span>
-        </div>
-        <div className="text-blue-400 flex items-center space-x-1.5">
-          <span className="text-gray-500">&gt;</span>
-          <span>semantic_search("FastAPI backend dev")</span>
-        </div>
-        <div className="text-gray-400 space-y-1">
-          <div className="flex justify-between items-center bg-blue-500/5 border border-blue-500/10 px-2 py-1 rounded-lg">
-            <span>Palle_Resume.pdf</span>
-            <span className="text-emerald-400 font-bold">98% Match</span>
-          </div>
-          <div className="flex justify-between items-center px-2 py-1">
-            <span>Dev_B.pdf</span>
-            <span className="text-gray-500">84% Match</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  if (id === 2) {
-    return (
-      <div className="w-full h-36 bg-gray-950/80 rounded-2xl border border-gray-850 p-4 flex flex-col justify-between select-none overflow-hidden relative group-hover:border-indigo-500/20 transition-all duration-300">
-        <div className="flex items-center justify-between border-b border-gray-900 pb-2">
-          <div className="flex items-center space-x-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500/70" />
-            <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
-            <span className="w-2 h-2 rounded-full bg-green-500/70" />
-          </div>
-          <span className="text-gray-600 text-[8px] font-mono">hrlytics.io/dashboard</span>
-        </div>
-        <div className="flex items-end justify-between px-2 pt-2 h-16 space-x-2">
-          <div className="flex-1 flex flex-col items-center space-y-1">
-            <div className="w-full bg-indigo-500/10 border border-indigo-500/20 rounded-t-md h-12 relative overflow-hidden">
-              <div className="absolute bottom-0 left-0 right-0 bg-indigo-500/40 h-8" />
-            </div>
-            <span className="text-[8px] text-gray-500 font-mono">Q1</span>
-          </div>
-          <div className="flex-1 flex flex-col items-center space-y-1">
-            <div className="w-full bg-indigo-500/10 border border-indigo-500/20 rounded-t-md h-12 relative overflow-hidden">
-              <div className="absolute bottom-0 left-0 right-0 bg-indigo-500/50 h-10" />
-            </div>
-            <span className="text-[8px] text-gray-500 font-mono">Q2</span>
-          </div>
-          <div className="flex-1 flex flex-col items-center space-y-1">
-            <div className="w-full bg-blue-500/10 border border-blue-500/20 rounded-t-md h-12 relative overflow-hidden">
-              <div className="absolute bottom-0 left-0 right-0 bg-blue-500/60 h-12" />
-            </div>
-            <span className="text-[8px] text-blue-400 font-mono">Q3</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  if (id === 3) {
-    return (
-      <div className="w-full h-36 bg-gray-950/80 rounded-2xl border border-gray-850 p-4 flex flex-col justify-between select-none overflow-hidden relative group-hover:border-teal-500/20 transition-all duration-300">
-        <div className="flex items-center justify-between border-b border-gray-900 pb-2">
-          <div className="flex items-center space-x-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500/70" />
-            <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
-            <span className="w-2 h-2 rounded-full bg-green-500/70" />
-          </div>
-          <span className="text-gray-600 text-[8px] font-mono">pathvisualizer.org</span>
-        </div>
-        <div className="grid grid-cols-6 gap-1 px-4 py-1.5 h-16 items-center">
-          {Array.from({ length: 18 }).map((_, i) => {
-            const isStart = i === 1;
-            const isEnd = i === 16;
-            const isPath = [2, 8, 14, 15].includes(i);
-            const isObstacle = [3, 9, 10].includes(i);
-            
-            let bgClass = "bg-gray-900 border border-gray-850";
-            if (isStart) bgClass = "bg-green-500/30 border border-green-500/50 shadow-[0_0_8px_rgba(34,197,94,0.3)]";
-            if (isEnd) bgClass = "bg-red-500/30 border border-red-500/50 shadow-[0_0_8px_rgba(239,68,68,0.3)]";
-            if (isPath) bgClass = "bg-teal-500/40 border border-teal-500/60 shadow-[0_0_8px_rgba(20,184,166,0.3)] animate-pulse";
-            if (isObstacle) bgClass = "bg-gray-850 border border-gray-800";
-            
-            return <div key={i} className={`h-4.5 rounded-sm ${bgClass}`} />;
-          })}
-        </div>
-      </div>
-    );
-  }
-  if (id === 4) {
-    return (
-      <div className="w-full h-36 bg-gray-950/80 rounded-2xl border border-gray-850 p-4 flex flex-col justify-between font-mono text-[9px] select-none overflow-hidden relative group-hover:border-purple-500/20 transition-all duration-300">
-        <div className="flex items-center justify-between border-b border-gray-900 pb-2">
-          <div className="flex items-center space-x-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500/70" />
-            <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
-            <span className="w-2 h-2 rounded-full bg-green-500/70" />
-          </div>
-          <span className="text-gray-600 text-[8px]">salary-predictor.py</span>
-        </div>
-        <div className="space-y-1.5 pt-1">
-          <div className="flex items-center justify-between text-gray-500 text-[8px]">
-            <span>Model: RandomForest</span>
-            <span>R² score: 0.88</span>
-          </div>
-          <div className="bg-purple-500/5 border border-purple-500/10 p-2 rounded-lg space-y-1">
-            <div className="flex justify-between text-gray-300">
-              <span>Experience: 5 Yrs</span>
-              <span>Predict: $124,500</span>
-            </div>
-            <div className="flex justify-between text-gray-400">
-              <span>Primary Tech: Python</span>
-              <span className="text-purple-400 font-bold">Error: ±2.4%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return null;
-}
-
 export default function Projects() {
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.08
-      }
-    }
-  };
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [synapseTab, setSynapseTab] = useState('brief'); // 'brief' | 'fallback' | 'forecast'
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: 'spring', stiffness: 100, damping: 20 }
-    }
-  };
+  const filters = [
+    { id: 'all', label: 'All Projects (7)' },
+    { id: 'ai', label: 'AI & GenAI' },
+    { id: 'fullstack', label: 'Full-Stack & APIs' },
+    { id: 'systems', label: 'Systems & ML' }
+  ];
+
+  const filteredProjects = CONFIG.projects.filter((p) => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'ai') return p.category.includes('AI');
+    if (activeFilter === 'fullstack') return p.tech.includes('FastAPI') || p.tech.includes('Next.js') || p.tech.includes('REST APIs');
+    if (activeFilter === 'systems') return p.category.includes('Systems') || p.category.includes('Data') || p.category.includes('Algorithms');
+    return true;
+  });
+
+  const flagship = CONFIG.projects.find((p) => p.id === 'synapseiq');
+  const otherProjects = filteredProjects.filter((p) => p.id !== 'synapseiq');
 
   return (
-    <section id="projects" className="py-32 px-6 relative bg-gradient-to-b from-[#080715] to-[#030014]">
-      {/* Decorative glows */}
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/5 blur-[130px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-purple-650/4 blur-[110px] pointer-events-none rounded-full" />
+    <section id="projects" className="py-28 px-6 relative bg-[#0b0f17]">
+      {/* Background Accent Gradients */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-sky-500/5 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/3 left-0 w-[450px] h-[450px] bg-teal-500/5 blur-[140px] pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto space-y-20">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-500/10 border border-blue-500/20">
-            Portfolio
+      <div className="max-w-7xl mx-auto space-y-16">
+        
+        {/* Section Header & Filters */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-slate-800/80">
+          <div className="space-y-3">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-mono-code text-teal-400">
+              <span>[ SECTION: PROJECTS ]</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white">
+              Featured Software & Platforms
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
+              Real applications demonstrating full-stack architecture, applied generative AI, high-throughput REST APIs, and algorithmic systems.
+            </p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold font-display text-white tracking-tight leading-none">
-            Featured Projects
-          </h2>
-          <p className="text-gray-455 text-sm md:text-base max-w-xl mx-auto font-normal leading-relaxed">
-            Factual engineering summaries of key applications demonstrating frontend design, backend architecture, and ML pipelines.
-          </p>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap gap-2">
+            {filters.map((f) => (
+              <button
+                key={f.id}
+                onClick={() => setActiveFilter(f.id)}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-mono-code transition-all duration-200 cursor-pointer ${
+                  activeFilter === f.id
+                    ? 'bg-teal-500 text-slate-950 font-semibold shadow-sm'
+                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Projects Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          {projects.map((project) => (
+        {/* 1. FLAGSHIP SPOTLIGHT PROJECT: SynapseIQ */}
+        {flagship && (activeFilter === 'all' || activeFilter === 'ai') && (
+          <div className="engineering-panel rounded-3xl p-6 sm:p-8 lg:p-10 border border-teal-500/30 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/5 blur-[100px] pointer-events-none rounded-full" />
+
+            {/* Flagship Header Badge */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+              <div className="flex items-center space-x-3">
+                <span className="px-3 py-1 rounded-full text-xs font-bold font-mono-code uppercase tracking-wider bg-teal-500/15 border border-teal-500/40 text-teal-300">
+                  ★ Flagship Spotlight
+                </span>
+                <span className="text-xs font-mono-code text-slate-400">
+                  {flagship.category}
+                </span>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <a
+                  href={flagship.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1.5 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer"
+                >
+                  <GithubIcon className="w-3.5 h-3.5" />
+                  <span>GitHub Repository</span>
+                </a>
+
+                {flagship.live && (
+                  <a
+                    href={flagship.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1.5 text-xs font-semibold text-slate-950 bg-teal-400 hover:bg-teal-300 px-3.5 py-1.5 rounded-lg transition-colors shadow-sm cursor-pointer"
+                  >
+                    <span>Launch Live Platform</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Flagship Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 items-start">
+              
+              {/* Left Column: Context & Tech Specs */}
+              <div className="lg:col-span-6 space-y-6">
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-white">
+                    {flagship.title}
+                  </h3>
+                  <p className="text-sm font-mono-code text-teal-400 mt-1">
+                    {flagship.tagline}
+                  </p>
+                </div>
+
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  {flagship.longDescription}
+                </p>
+
+                {/* Important Architecture Note Callout */}
+                <div className="p-4 rounded-xl bg-slate-900/90 border border-amber-500/30 text-xs space-y-1">
+                  <div className="text-amber-400 font-mono-code font-bold flex items-center space-x-1.5">
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Technical Architecture Note</span>
+                  </div>
+                  <p className="text-slate-300 leading-normal">
+                    This platform is architected exclusively with a modern <span className="text-white font-semibold">React & TypeScript</span> client application interacting directly with the <span className="text-white font-semibold">Google Gemini API</span>. It deliberately does not require an external Python/FastAPI backend server, utilizing client-side analytical engines for fallback resiliency.
+                  </p>
+                </div>
+
+                {/* Metrics Pill Grid */}
+                <div className="grid grid-cols-3 gap-2.5 pt-1">
+                  {flagship.metrics.map((m, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-slate-900/70 border border-slate-800">
+                      <div className="text-[10px] font-mono-code text-slate-400">{m.label}</div>
+                      <div className="text-xs font-bold text-slate-100 mt-0.5 truncate">{m.value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Tags */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {flagship.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono-code text-slate-300"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column: Interactive Platform Preview Simulator */}
+              <div className="lg:col-span-6">
+                <div className="rounded-2xl bg-slate-950/90 border border-slate-800 overflow-hidden shadow-xl">
+                  {/* Simulator Control Bar */}
+                  <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800">
+                    <div className="flex items-center space-x-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                      <span className="text-[11px] font-mono-code text-slate-400 pl-1">synapseiq-ai.vercel.app</span>
+                    </div>
+
+                    {/* Tab Switcher */}
+                    <div className="flex rounded-lg bg-slate-950 p-0.5 border border-slate-800 text-[10px] font-mono-code">
+                      <button
+                        onClick={() => setSynapseTab('brief')}
+                        className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
+                          synapseTab === 'brief' ? 'bg-teal-500/20 text-teal-300 font-bold' : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        Executive Brief
+                      </button>
+                      <button
+                        onClick={() => setSynapseTab('fallback')}
+                        className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
+                          synapseTab === 'fallback' ? 'bg-teal-500/20 text-teal-300 font-bold' : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        Fallback Engine
+                      </button>
+                      <button
+                        onClick={() => setSynapseTab('forecast')}
+                        className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
+                          synapseTab === 'forecast' ? 'bg-teal-500/20 text-teal-300 font-bold' : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        Forecast Matrix
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Simulator Window Viewport */}
+                  <div className="p-5 font-mono-code text-xs space-y-4 min-h-[300px]">
+                    {synapseTab === 'brief' && (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                          <span className="text-teal-400 font-semibold">&gt; SYNAPSE_AI_BRIEF_GENERATOR</span>
+                          <span className="px-2 py-0.5 rounded bg-teal-500/10 text-teal-400 text-[10px]">GEMINI_PRO_ACTIVE</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/80 space-y-1.5 text-slate-300 text-[11px]">
+                          <div className="text-white font-semibold">Strategic Executive Summary:</div>
+                          <p className="text-slate-400 leading-relaxed font-sans">
+                            Customer acquisition velocity increased 14.2% week-over-week. Churn risks detected in Tier-2 accounts; recommender recommends deploying automated CRM outreach sequence within 48 hours.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-[10px]">
+                          <div className="p-2 rounded bg-slate-900/40 border border-slate-800">
+                            <span className="text-slate-400">Contextual Health:</span>
+                            <div className="text-emerald-400 font-bold text-xs mt-0.5">94.8 / 100</div>
+                          </div>
+                          <div className="p-2 rounded bg-slate-900/40 border border-slate-800">
+                            <span className="text-slate-400">Decision Confidence:</span>
+                            <div className="text-teal-300 font-bold text-xs mt-0.5">High (Gemini Flash)</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {synapseTab === 'fallback' && (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                          <span className="text-amber-400 font-semibold">&gt; CLIENT_SIDE_FALLBACK_SIMULATOR</span>
+                          <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 text-[10px]">OFFLINE_RESILIENT</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/80 space-y-1 text-slate-300 text-[11px]">
+                          <div className="text-amber-300 font-semibold">Analytical Engine Fallback Triggered:</div>
+                          <p className="text-slate-400 font-sans leading-relaxed">
+                            Simulated upstream latency: 0ms failure impact. Client-side deterministic algorithms computed business metrics and generated heuristic recommendations without API interruption.
+                          </p>
+                        </div>
+                        <div className="space-y-1 text-[10px] text-slate-400">
+                          <div>[1] Ingested 1,200 local telemetry data points</div>
+                          <div>[2] Applied client-side moving average and quantile filters</div>
+                          <div className="text-emerald-400">[3] Fallback metrics synthesized successfully in 12ms</div>
+                        </div>
+                      </div>
+                    )}
+
+                    {synapseTab === 'forecast' && (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                          <span className="text-sky-400 font-semibold">&gt; INTERACTIVE_SCENARIO_FORECAST</span>
+                          <span className="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 text-[10px]">MONTE_CARLO_SIM</span>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-[11px] text-slate-300">
+                            <span>Projected Revenue Target (Q4)</span>
+                            <span className="text-teal-400 font-bold">+28.4%</span>
+                          </div>
+                          <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                            <div className="bg-teal-500 h-full rounded-full" style={{ width: '74%' }} />
+                          </div>
+                          <div className="flex justify-between text-[10px] text-slate-500">
+                            <span>Base: $140K</span>
+                            <span>Target: $190K</span>
+                          </div>
+                        </div>
+                        <div className="p-2.5 rounded bg-slate-900/50 border border-slate-800 text-[10px] text-slate-400 space-y-1">
+                          <span className="text-slate-300 font-semibold">Recommended Action:</span>
+                          <p className="font-sans">Shift 15% outreach budget into high-converting account-based marketing sequences.</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Simulator Footer */}
+                  <div className="px-4 py-2.5 bg-slate-900/60 border-t border-slate-800 text-[11px] font-mono-code text-slate-400 flex items-center justify-between">
+                    <span className="flex items-center space-x-1.5">
+                      <span className="w-2 h-2 rounded-full bg-teal-400" />
+                      <span>Pure Client-Side React + TypeScript</span>
+                    </span>
+                    <a
+                      href={flagship.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 font-semibold flex items-center space-x-1"
+                    >
+                      <span>Try Interactive App</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* 2. OTHER FEATURED & SPECIALIZED PROJECTS GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {otherProjects.map((project) => (
             <motion.div
               key={project.id}
-              variants={cardVariants}
-              whileHover={{ scale: 1.025, y: -8 }}
-              className="glass-panel p-8 md:p-10 rounded-3xl flex flex-col justify-between relative overflow-hidden group hover-border-glow border border-gray-900/60 transition-all duration-350"
+              layout
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.45 }}
+              className="engineering-panel engineering-panel-interactive rounded-2xl p-6 flex flex-col justify-between border border-slate-800 group relative"
             >
-              {/* Graphic Placeholder Preview & Details */}
-              <div className="space-y-6">
-                {/* CSS Mockup window */}
-                <ProjectMockup id={project.id} />
+              <div className="space-y-4">
+                {/* Header: Badge & Category */}
+                <div className="flex items-center justify-between">
+                  <span className={`text-[10px] font-mono-code font-bold uppercase px-2.5 py-0.5 rounded-full border ${
+                    project.badge.includes('Hackathon') 
+                      ? 'bg-amber-500/10 text-amber-400 border-amber-500/25'
+                      : project.badge.includes('Architecture') || project.badge.includes('Systems')
+                      ? 'bg-teal-500/10 text-teal-300 border-teal-500/25'
+                      : 'bg-sky-500/10 text-sky-400 border-sky-500/25'
+                  }`}>
+                    {project.badge}
+                  </span>
+                  <span className="text-[11px] font-mono-code text-slate-400">
+                    {project.category}
+                  </span>
+                </div>
 
-                {/* Title, Icon & Project Type */}
-                <div className="flex items-center space-x-3.5">
-                  <div className="w-11 h-11 rounded-2xl bg-gray-900/80 border border-gray-850 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300">
-                    {project.icon}
-                  </div>
-                  <div className="space-y-1.5 flex-1 min-w-0">
-                    <h3 className="text-xl md:text-2.5xl font-extrabold font-display text-white group-hover:text-blue-400 transition-colors duration-200 leading-tight truncate">
-                      {project.title}
-                    </h3>
-                    <div className="flex">
-                      <span className={`px-2.5 py-0.5 text-[9px] font-bold tracking-wider uppercase border rounded-full ${project.badgeColor} flex items-center space-x-1`}>
-                        <span>{project.badge}</span>
-                      </span>
-                    </div>
+                {/* Title & Tagline */}
+                <div>
+                  <h3 className="text-xl font-bold font-display text-white group-hover:text-teal-300 transition-colors">
+                    {project.title}
+                  </h3>
+                  <div className="text-xs font-mono-code text-slate-400 mt-0.5">
+                    {project.tagline}
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                   {project.description}
                 </p>
 
-                {/* GitHub stars style metrics badge */}
-                <div className="flex flex-wrap gap-2.5 pt-1">
-                  {project.metrics.map((metric, idx) => (
-                    <div 
-                      key={idx} 
-                      className="flex items-center space-x-1.5 bg-gray-950/60 border border-gray-850 rounded-lg px-3 py-1.5 text-xs text-gray-300 font-mono font-medium shadow-sm hover:border-gray-800 transition-colors"
-                    >
-                      {metric.icon}
-                      <span>{metric.label}</span>
+                {/* Technical Highlights / Metrics */}
+                <div className="grid grid-cols-2 gap-2 pt-1 font-mono-code text-[11px]">
+                  {project.metrics.slice(0, 2).map((m, idx) => (
+                    <div key={idx} className="p-2 rounded-lg bg-slate-900/60 border border-slate-800/80">
+                      <span className="text-slate-400 text-[10px] block">{m.label}</span>
+                      <span className="text-slate-200 font-semibold mt-0.5 block truncate">{m.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Tech Stack & Links footer */}
-              <div className="pt-6 mt-8 border-t border-gray-900 space-y-5">
-                <div className="flex flex-wrap gap-2">
+              {/* Footer: Tech Badges & GitHub Links */}
+              <div className="pt-5 mt-6 border-t border-slate-800/80 space-y-4">
+                <div className="flex flex-wrap gap-1.5">
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="px-3 py-1 rounded-xl bg-gray-950/40 border border-gray-900 text-[10px] font-semibold text-gray-400 tracking-wide flex items-center space-x-1 hover:text-white transition-colors"
+                      className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono-code text-slate-400"
                     >
-                      {techIcons[t] || <Code2 className="w-3 h-3 text-gray-500" />}
-                      <span>{t}</span>
+                      {t}
                     </span>
                   ))}
                 </div>
@@ -340,32 +370,33 @@ export default function Projects() {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-2 text-xs text-gray-400 hover:text-white transition-colors duration-200 font-semibold"
+                    className="flex items-center space-x-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer"
                   >
-                    <GithubIcon className="w-4.5 h-4.5 text-gray-550 group-hover:text-white transition-colors" />
-                    <span>GitHub</span>
+                    <GithubIcon className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+                    <span>View Repository</span>
                   </a>
 
-                  {project.demo ? (
+                  {project.live ? (
                     <a
-                      href={project.demo}
+                      href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1.5 text-xs text-blue-400 hover:text-blue-300 font-bold bg-blue-500/5 px-3 py-1.5 rounded-xl border border-blue-500/10 hover:border-blue-500/25 transition-all duration-200"
+                      className="flex items-center space-x-1 text-xs font-semibold text-teal-400 hover:text-teal-300 cursor-pointer"
                     >
-                      <span>Preview</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Live Preview</span>
+                      <ExternalLink className="w-3 h-3" />
                     </a>
                   ) : (
-                    <span className="flex items-center space-x-1.5 text-[10px] text-gray-500 font-bold bg-gray-950/40 border border-gray-900 px-3 py-1.5 rounded-xl select-none uppercase tracking-wide">
-                      <span>Live Demo Coming Soon</span>
+                    <span className="text-[10px] font-mono-code text-slate-400">
+                      Verified Implementation
                     </span>
                   )}
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+
       </div>
     </section>
   );

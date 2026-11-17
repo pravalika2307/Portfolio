@@ -1,90 +1,123 @@
 import { motion } from 'framer-motion';
-import { Terminal, Brain, Database, Code } from 'lucide-react';
+import { Terminal, Cpu, Database, Server } from 'lucide-react';
+
+const engineeringPrinciples = [
+  {
+    icon: <Server className="w-5 h-5 text-teal-400" />,
+    title: 'Resilient Backend Architecture',
+    summary: 'Designing modular REST APIs and relational schemas using FastAPI, SQLAlchemy, and PostgreSQL with clear data validation and deterministic error handling.'
+  },
+  {
+    icon: <Cpu className="w-5 h-5 text-sky-400" />,
+    title: 'Applied Generative AI',
+    summary: 'Integrating LLMs and the Google Gemini API to solve real workflow bottlenecks—focusing on contextual prompts, response schemas, and client-side analytical fallback logic.'
+  },
+  {
+    icon: <Database className="w-5 h-5 text-emerald-400" />,
+    title: 'Business Automation & ML',
+    summary: 'Automating sales, marketing, and CRM data pipelines at Agile Receivables, combined with empirical ML feature engineering delivering measurable accuracy gains.'
+  }
+];
 
 export default function About() {
-  const cardData = [
-    {
-      icon: <Terminal className="w-5 h-5 text-blue-400" />,
-      title: 'Backend Engineering',
-      description: 'Designing highly optimized REST APIs and microservices using FastAPI, Flask, and robust relational/non-relational schemas.'
-    },
-    {
-      icon: <Brain className="w-5 h-5 text-indigo-400" />,
-      title: 'Artificial Intelligence',
-      description: 'Developing intelligent applications integrating Generative AI, Large Language Models (LLMs), Prompt Engineering, and BreethAI.'
-    },
-    {
-      icon: <Database className="w-5 h-5 text-teal-400" />,
-      title: 'Advanced Storage',
-      description: 'Caching, message brokering, and scaling databases using Valkey, SQLite, and optimized queries.'
-    },
-    {
-      icon: <Code className="w-5 h-5 text-purple-400" />,
-      title: 'Problem Solving',
-      description: 'Strengthening system logic with solid algorithms (BFS, Dijkstra, A*) and clean C++, Java, and Python fundamentals.'
-    }
-  ];
-
   return (
-    <section id="about" className="py-24 px-6 relative bg-gradient-to-b from-[#030014] to-[#080715]">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[350px] h-[350px] bg-blue-600/5 blur-[120px] pointer-events-none rounded-full" />
+    <section id="about" className="py-28 px-6 relative bg-[#0b0f17]">
+      {/* Subtle Glow Backdrop */}
+      <div className="absolute top-1/2 left-0 w-[450px] h-[450px] bg-teal-500/5 blur-[140px] pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-7xl mx-auto space-y-16">
+        
+        {/* Section Header */}
+        <div className="space-y-3">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-mono-code text-teal-400">
+            <span>[ SECTION: ABOUT ]</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white">
+            Engineering software with clarity, discipline, and purpose.
+          </h2>
+        </div>
+
+        {/* Editorial Narrative Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Summary / Left */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="lg:col-span-5 space-y-6"
-          >
-            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-500/10 border border-blue-500/20">
-              About Me
-            </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold font-display text-white">
-              Architecting intelligent backends & smart applications.
-            </h2>
-            <div className="text-gray-400 space-y-4 leading-relaxed font-normal">
-              <p>
-                I enjoy designing software that solves practical problems through clean engineering, intelligent automation, and scalable backend systems. As an MCA candidate graduating in 2026, my academic foundation is paired with practical experience building and optimizing backend servers, relational databases, and predictive machine learning architectures.
-              </p>
-              <p>
-                Rather than chasing tools, I focus on system reliability, modular code, and creating real-world impact. Whether configuring fast memory caching layers or training classification algorithms, I strive to design logic that is elegant, clean, and performant.
-              </p>
-            </div>
-          </motion.div>
+          {/* Main Story Narrative */}
+          <div className="lg:col-span-7 space-y-6 text-slate-300 text-base leading-relaxed">
+            <p>
+              I am a Software Engineer and MCA graduate (2026) driven by the mechanics of how software systems handle complexity. Rather than viewing software as isolated scripts or visual mockups, I approach engineering from first principles: clear data contracts, predictable API endpoints, robust relational modeling, and resilient user interfaces.
+            </p>
 
-          {/* Core Focus Grid / Right */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {cardData.map((card, index) => (
+            <p>
+              In my current role as a Growth & Technology Intern at <span className="text-white font-medium">Agile Receivables</span>, I contribute directly to software development and internal technology initiatives. My work centers on building a Sales and Marketing Automation platform—architecting CRM workflows, lead management pipelines, outreach automation, and investigating HubSpot CRM synchronization architecture. I also troubleshoot application edge cases and incorporate AI-assisted developer tooling to enhance engineering velocity.
+            </p>
+
+            <p>
+              Previously at <span className="text-white font-medium">IBM Edunet Foundation</span>, I developed machine learning solutions using Python, Pandas, NumPy, and Scikit-learn. By performing structured data preprocessing, outlier detection, and systematic feature engineering, I improved predictive regression accuracy by 18% and delivered an interactive Streamlit application for workforce forecasting.
+            </p>
+
+            <p>
+              My academic trajectory combines a Master of Computer Applications (MCA) completed in 2026 with a Bachelor of Science in Computer Science & Cognitive Systems (2021–2024), where I graduated with a <span className="text-teal-400 font-semibold font-mono-code">CGPA of 9.1</span>. This background provides a balanced foundation across computational algorithms, cognitive system concepts, and production software patterns.
+            </p>
+
+            {/* Engineering Ethos Card */}
+            <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 font-mono-code text-xs text-slate-300 space-y-2">
+              <div className="flex items-center space-x-2 text-teal-400 font-semibold">
+                <Terminal className="w-4 h-4" />
+                <span>Engineering Philosophy</span>
+              </div>
+              <p className="font-sans text-sm text-slate-400 leading-normal">
+                "I prioritize software that is simple, testable, and genuinely useful. I believe in writing readable code, respecting system boundaries, and measuring success by real operational impact rather than technical hype."
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Key Engineering Pillars */}
+          <div className="lg:col-span-5 space-y-5">
+            <div className="text-xs font-mono-code uppercase tracking-wider text-slate-400 pb-1">
+              Core Technical Capabilities
+            </div>
+
+            {engineeringPrinciples.map((pillar, idx) => (
               <motion.div
-                key={card.title}
-                initial={{ opacity: 0, y: 30 }}
+                key={pillar.title}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
-                className="glass-panel glass-panel-hover p-6 rounded-2xl flex flex-col space-y-3 relative overflow-hidden group"
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.45, delay: idx * 0.1 }}
+                className="engineering-panel engineering-panel-interactive p-6 rounded-2xl space-y-3"
               >
-                {/* Microglow */}
-                <div className="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/5 group-hover:bg-blue-500/10 blur-xl transition-all duration-300 rounded-full" />
-                
-                <div className="w-10 h-10 rounded-xl bg-gray-900/60 border border-gray-800 flex items-center justify-center">
-                  {card.icon}
+                <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center">
+                  {pillar.icon}
                 </div>
-                <h3 className="text-lg font-bold font-display text-white group-hover:text-blue-400 transition-colors duration-200">
-                  {card.title}
+                <h3 className="text-base font-bold font-display text-white">
+                  {pillar.title}
                 </h3>
-                <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                  {card.description}
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
+                  {pillar.summary}
                 </p>
               </motion.div>
             ))}
+
+            {/* Quick Education / Credential Highlight Box */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-slate-800/90 space-y-3">
+              <div className="text-xs font-mono-code text-teal-400 font-semibold">
+                Academic Background
+              </div>
+              <div className="space-y-1.5 text-xs text-slate-300">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-white">Master of Computer Applications (MCA)</span>
+                  <span className="text-slate-400 font-mono-code">2026</span>
+                </div>
+                <div className="flex justify-between items-center text-slate-400">
+                  <span>B.Sc Computer Science & Cognitive Systems</span>
+                  <span className="text-teal-400 font-mono-code font-semibold">CGPA: 9.1</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
+
       </div>
     </section>
   );
