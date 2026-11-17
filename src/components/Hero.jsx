@@ -78,7 +78,7 @@ export default function Hero() {
               transition={{ duration: 0.55, delay: 0.1 }}
               className="space-y-3"
             >
-              <h1 className="text-3xl sm:text-5xl lg:text-[3.75rem] font-bold font-display-hero tracking-tight text-[#F5F2EE] leading-[1.08]">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-display-hero tracking-tight text-[#F5F2EE] leading-[1.08]">
                 PRAVALIKA PALLE
               </h1>
               
@@ -205,7 +205,7 @@ export default function Hero() {
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B35]/80" />
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FFB36B]/80" />
                   <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-                  <span className="text-[#99969A] pl-1 font-technical-mono">topology_mesh.3d</span>
+                  <span className="text-[#99969A] pl-1 font-technical-mono">intelligence_core.3d</span>
                 </div>
                 <div className="flex items-center space-x-1.5 text-[#FF6B35]">
                   <Activity className="w-3.5 h-3.5 animate-pulse" />
@@ -229,7 +229,7 @@ export default function Hero() {
                 {/* Micro Telemetry Badges */}
                 <div className="absolute bottom-3 left-3 bg-[#0B0B0D]/85 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-lg text-[10px] font-technical-mono text-[#F5F2EE] flex items-center space-x-2 pointer-events-none">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B35] animate-ping" />
-                  <span>Connected Architecture Mesh</span>
+                  <span>Digital Intelligence Artifact</span>
                 </div>
 
                 <div className="absolute top-3 right-3 bg-[#0B0B0D]/85 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-lg text-[10px] font-technical-mono text-[#99969A] pointer-events-none">

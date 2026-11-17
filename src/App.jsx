@@ -1,5 +1,4 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
-import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -21,9 +20,6 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#0B0B0D] text-[#F5F2EE] selection:bg-[#FF6B35]/25 selection:text-[#FFB36B]">
-      {/* Precision Custom Cursor */}
-      <CustomCursor />
-
       {/* Precision Burnt Orange Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#FF6B35] via-[#FFB36B] to-[#FF6B35] origin-[0%] z-50 shadow-[0_0_12px_rgba(255,107,53,0.5)]"

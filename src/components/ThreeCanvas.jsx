@@ -8,7 +8,7 @@ export default function ThreeCanvas() {
     const container = mountRef.current;
     if (!container) return;
 
-    // Respect user's reduced-motion preference
+    // Respect reduced-motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const width = container.clientWidth;
@@ -17,7 +17,7 @@ export default function ThreeCanvas() {
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 21;
+    camera.position.set(0, 0, 18);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -27,240 +27,215 @@ export default function ThreeCanvas() {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
 
-    // Master Group for mouse parallax & scroll transformation
+    // Master Group for mouse parallax & rotations
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
     // Color Palette: Obsidian + Burnt Orange + Warm Apricot
     const COLOR_BURNT_ORANGE = 0xff6b35;
     const COLOR_WARM_APRICOT = 0xffb36b;
-    const COLOR_OBSIDIAN_CORE = 0x24242a;
+    const COLOR_OBSIDIAN = 0x18181d;
+    const COLOR_CORE_DARK = 0x24242e;
 
-    // 1. Central Faceted Polyhedral Core (Software Systems Core)
-    const coreGeometry = new THREE.IcosahedronGeometry(4.5, 1);
-    const coreMaterial = new THREE.MeshStandardMaterial({
-      color: COLOR_OBSIDIAN_CORE,
-      roughness: 0.3,
-      metalness: 0.85,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.48
+    // 1. Central Faceted Intelligence Core (Physical Obsidian Sculpture)
+    const coreGeom = new THREE.IcosahedronGeometry(3.6, 0);
+    const coreMat = new THREE.MeshStandardMaterial({
+      color: COLOR_CORE_DARK,
+      roughness: 0.18,
+      metalness: 0.9,
+      flatShading: true
     });
-    const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
+    const coreMesh = new THREE.Mesh(coreGeom, coreMat);
     masterGroup.add(coreMesh);
 
-    // 2. Inner Glowing Octahedron Core (Applied AI Engine)
-    const innerGeometry = new THREE.OctahedronGeometry(2.3, 0);
-    const innerMaterial = new THREE.MeshBasicMaterial({
+    // Outer Wireframe Cage on the Core
+    const cageGeom = new THREE.IcosahedronGeometry(3.85, 0);
+    const cageMat = new THREE.MeshBasicMaterial({
+      color: COLOR_BURNT_ORANGE,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.35
+    });
+    const cageMesh = new THREE.Mesh(cageGeom, cageMat);
+    masterGroup.add(cageMesh);
+
+    // Inner Glowing Energy Octahedron
+    const innerGeom = new THREE.OctahedronGeometry(2.0, 0);
+    const innerMat = new THREE.MeshBasicMaterial({
       color: COLOR_BURNT_ORANGE,
       wireframe: true,
       transparent: true,
       opacity: 0.85
     });
-    const innerMesh = new THREE.Mesh(innerGeometry, innerMaterial);
+    const innerMesh = new THREE.Mesh(innerGeom, innerMat);
     masterGroup.add(innerMesh);
 
-    // Core Solid Nucleus
-    const nucleusGeometry = new THREE.SphereGeometry(0.85, 16, 16);
-    const nucleusMaterial = new THREE.MeshBasicMaterial({
-      color: COLOR_BURNT_ORANGE,
-      transparent: true,
-      opacity: 0.8
+    // Core Solid Energy Nucleus
+    const nucleusGeom = new THREE.SphereGeometry(0.75, 16, 16);
+    const nucleusMat = new THREE.MeshBasicMaterial({
+      color: COLOR_WARM_APRICOT
     });
-    const nucleusMesh = new THREE.Mesh(nucleusGeometry, nucleusMaterial);
+    const nucleusMesh = new THREE.Mesh(nucleusGeom, nucleusMat);
     masterGroup.add(nucleusMesh);
 
-    // 3. Gyroscopic Dual Orbital Rings (Connected Systems)
-    const ringGeometry1 = new THREE.TorusGeometry(6.6, 0.05, 16, 100);
-    const ringMaterial1 = new THREE.MeshBasicMaterial({
+    // 2. Dual Gyroscopic Precision Rings
+    const ring1Geom = new THREE.TorusGeometry(5.8, 0.05, 16, 100);
+    const ring1Mat = new THREE.MeshStandardMaterial({
       color: COLOR_BURNT_ORANGE,
-      transparent: true,
-      opacity: 0.65
+      roughness: 0.2,
+      metalness: 0.9
     });
-    const ringMesh1 = new THREE.Mesh(ringGeometry1, ringMaterial1);
-    ringMesh1.rotation.x = Math.PI / 3;
-    masterGroup.add(ringMesh1);
+    const ring1Mesh = new THREE.Mesh(ring1Geom, ring1Mat);
+    ring1Mesh.rotation.x = Math.PI / 3;
+    masterGroup.add(ring1Mesh);
 
-    const ringGeometry2 = new THREE.TorusGeometry(8.0, 0.04, 16, 100);
-    const ringMaterial2 = new THREE.MeshBasicMaterial({
+    const ring2Geom = new THREE.TorusGeometry(7.2, 0.04, 16, 100);
+    const ring2Mat = new THREE.MeshStandardMaterial({
       color: COLOR_WARM_APRICOT,
-      transparent: true,
-      opacity: 0.45
+      roughness: 0.25,
+      metalness: 0.85
     });
-    const ringMesh2 = new THREE.Mesh(ringGeometry2, ringMaterial2);
-    ringMesh2.rotation.y = Math.PI / 4;
-    ringMesh2.rotation.z = Math.PI / 6;
-    masterGroup.add(ringMesh2);
+    const ring2Mesh = new THREE.Mesh(ring2Geom, ring2Mat);
+    ring2Mesh.rotation.y = Math.PI / 4;
+    ring2Mesh.rotation.z = Math.PI / 6;
+    masterGroup.add(ring2Mesh);
 
-    // 4. Subtle Outer Horizon Orbital Ring
-    const ringGeometry3 = new THREE.TorusGeometry(9.4, 0.025, 12, 100);
-    const ringMaterial3 = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.2
+    // 3. Floating Geometric Shards (Levitating Systems & Intelligence Modules)
+    const shardCount = 8;
+    const shardGeom = new THREE.TetrahedronGeometry(0.55, 0);
+    const shardMat = new THREE.MeshStandardMaterial({
+      color: COLOR_OBSIDIAN,
+      roughness: 0.15,
+      metalness: 0.95,
+      flatShading: true
     });
-    const ringMesh3 = new THREE.Mesh(ringGeometry3, ringMaterial3);
-    ringMesh3.rotation.x = -Math.PI / 5;
-    masterGroup.add(ringMesh3);
-
-    // 5. Distributed Microservice Nodes & Interconnects (3D Particle Network)
-    const nodeCount = 36;
-    const nodeGeometry = new THREE.SphereGeometry(0.16, 12, 12);
-    const nodeMaterial = new THREE.MeshBasicMaterial({
+    const shardWireMat = new THREE.MeshBasicMaterial({
       color: COLOR_WARM_APRICOT,
+      wireframe: true,
       transparent: true,
-      opacity: 0.95
+      opacity: 0.6
     });
 
-    const nodePositions = [];
-    const radius = 6.4;
+    const shards = [];
+    for (let i = 0; i < shardCount; i++) {
+      const shardGroup = new THREE.Group();
 
-    for (let i = 0; i < nodeCount; i++) {
-      const phi = Math.acos(-1 + (2 * i) / nodeCount);
-      const theta = Math.sqrt(nodeCount * Math.PI) * phi;
+      const sMesh = new THREE.Mesh(shardGeom, shardMat);
+      const sWire = new THREE.Mesh(shardGeom, shardWireMat);
+      sWire.scale.set(1.08, 1.08, 1.08);
+      shardGroup.add(sMesh);
+      shardGroup.add(sWire);
 
-      const x = radius * Math.cos(theta) * Math.sin(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(phi);
+      const angle = (i / shardCount) * Math.PI * 2;
+      const radius = 5.2 + (i % 2) * 1.4;
+      const heightOffset = ((i % 3) - 1) * 1.8;
 
-      nodePositions.push(new THREE.Vector3(x, y, z));
+      shardGroup.position.set(
+        Math.cos(angle) * radius,
+        heightOffset,
+        Math.sin(angle) * radius
+      );
 
-      const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-      node.position.set(x, y, z);
-      masterGroup.add(node);
-    }
-
-    // Interconnecting Rays
-    const linePositions = [];
-    for (let i = 0; i < nodePositions.length; i++) {
-      for (let j = i + 1; j < nodePositions.length; j++) {
-        const dist = nodePositions[i].distanceTo(nodePositions[j]);
-        if (dist < 4.2) {
-          linePositions.push(
-            nodePositions[i].x, nodePositions[i].y, nodePositions[i].z,
-            nodePositions[j].x, nodePositions[j].y, nodePositions[j].z
-          );
-        }
-      }
-    }
-
-    const lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setAttribute(
-      'position',
-      new THREE.Float32BufferAttribute(linePositions, 3)
-    );
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: COLOR_BURNT_ORANGE,
-      transparent: true,
-      opacity: 0.22
-    });
-    const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
-    masterGroup.add(linesMesh);
-
-    // 6. Ambient Constellation Particles (Surrounding Space)
-    const ambientParticleCount = 60;
-    const ambientPositions = new Float32Array(ambientParticleCount * 3);
-    for (let i = 0; i < ambientParticleCount; i++) {
-      const i3 = i * 3;
-      ambientPositions[i3] = (Math.random() - 0.5) * 22;
-      ambientPositions[i3 + 1] = (Math.random() - 0.5) * 22;
-      ambientPositions[i3 + 2] = (Math.random() - 0.5) * 16;
-    }
-    const ambientGeometry = new THREE.BufferGeometry();
-    ambientGeometry.setAttribute('position', new THREE.BufferAttribute(ambientPositions, 3));
-    const ambientMaterial = new THREE.PointsMaterial({
-      color: COLOR_WARM_APRICOT,
-      size: 0.18,
-      transparent: true,
-      opacity: 0.5
-    });
-    const ambientPoints = new THREE.Points(ambientGeometry, ambientMaterial);
-    masterGroup.add(ambientPoints);
-
-    // 7. Orbiting Data Packet Satellites
-    const packetCount = 6;
-    const packetGeometry = new THREE.SphereGeometry(0.24, 12, 12);
-    const packetMaterial = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.95
-    });
-
-    const packets = [];
-    for (let i = 0; i < packetCount; i++) {
-      const p = new THREE.Mesh(packetGeometry, packetMaterial);
-      masterGroup.add(p);
-      packets.push({
-        mesh: p,
-        speed: 0.4 + i * 0.12,
-        radius: 6.6 + (i % 2) * 1.4,
-        angle: (i * 2 * Math.PI) / packetCount,
-        inclination: (i * Math.PI) / packetCount
+      masterGroup.add(shardGroup);
+      shards.push({
+        group: shardGroup,
+        baseAngle: angle,
+        radius,
+        baseY: heightOffset,
+        speed: 0.35 + (i % 3) * 0.12,
+        rotSpeed: 0.8 + (i % 2) * 0.4
       });
     }
 
-    // 8. Dynamic Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+    // 4. Ambient Stardust Particles
+    const particleCount = 70;
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      particlePositions[i3] = (Math.random() - 0.5) * 20;
+      particlePositions[i3 + 1] = (Math.random() - 0.5) * 20;
+      particlePositions[i3 + 2] = (Math.random() - 0.5) * 14;
+    }
+    const particleGeom = new THREE.BufferGeometry();
+    particleGeom.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      color: COLOR_WARM_APRICOT,
+      size: 0.14,
+      transparent: true,
+      opacity: 0.55
+    });
+    const particlePoints = new THREE.Points(particleGeom, particleMat);
+    masterGroup.add(particlePoints);
+
+    // 5. Realistic Physical Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(COLOR_BURNT_ORANGE, 2.8, 50);
-    pointLight1.position.set(10, 10, 10);
-    scene.add(pointLight1);
+    // Key Light (Burnt Orange)
+    const keyLight = new THREE.PointLight(COLOR_BURNT_ORANGE, 3.8, 40);
+    keyLight.position.set(10, 12, 12);
+    scene.add(keyLight);
 
-    const pointLight2 = new THREE.PointLight(COLOR_WARM_APRICOT, 2.0, 50);
-    pointLight2.position.set(-10, -10, 10);
-    scene.add(pointLight2);
+    // Fill Light (Warm Apricot)
+    const fillLight = new THREE.PointLight(COLOR_WARM_APRICOT, 2.4, 40);
+    fillLight.position.set(-12, -8, 8);
+    scene.add(fillLight);
+
+    // Rim Directional Light for edge definition
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    rimLight.position.set(0, 15, -10);
+    scene.add(rimLight);
 
     // Mouse Interaction Logic
     let isDragging = false;
-    let previousMousePosition = { x: 0, y: 0 };
+    let prevMouse = { x: 0, y: 0 };
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
 
-    const handleMouseMove = (e) => {
+    const onMouseMove = (e) => {
       const rect = container.getBoundingClientRect();
       const mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const mouseY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      targetX = mouseX * 0.9;
-      targetY = mouseY * 0.9;
+      targetX = mouseX * 0.8;
+      targetY = mouseY * 0.8;
 
       if (isDragging) {
-        const deltaMove = {
-          x: e.clientX - previousMousePosition.x,
-          y: e.clientY - previousMousePosition.y
-        };
-        masterGroup.rotation.y += deltaMove.x * 0.01;
-        masterGroup.rotation.x += deltaMove.y * 0.01;
-        previousMousePosition = { x: e.clientX, y: e.clientY };
+        const dx = e.clientX - prevMouse.x;
+        const dy = e.clientY - prevMouse.y;
+        masterGroup.rotation.y += dx * 0.01;
+        masterGroup.rotation.x += dy * 0.01;
+        prevMouse = { x: e.clientX, y: e.clientY };
       }
     };
 
-    const handleMouseDown = (e) => {
+    const onMouseDown = (e) => {
       isDragging = true;
-      previousMousePosition = { x: e.clientX, y: e.clientY };
+      prevMouse = { x: e.clientX, y: e.clientY };
     };
 
-    const handleMouseUp = () => {
+    const onMouseUp = () => {
       isDragging = false;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    container.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    container.addEventListener('mousedown', onMouseDown);
 
     // Scroll Reaction
     let scrollYOffset = 0;
-    const handleScroll = () => {
-      scrollYOffset = window.scrollY * 0.001;
+    const onScroll = () => {
+      scrollYOffset = window.scrollY * 0.0008;
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     // Resize
-    const handleResize = () => {
+    const onResize = () => {
       if (!container) return;
       const w = container.clientWidth;
       const h = container.clientHeight;
@@ -268,9 +243,9 @@ export default function ThreeCanvas() {
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', onResize);
 
-    // Viewport Visibility Observer (pause when out of view)
+    // Visibility Observer
     let isVisible = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -286,11 +261,9 @@ export default function ThreeCanvas() {
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-
       if (!isVisible) return;
 
-      const delta = clock.getDelta();
-      const elapsedTime = clock.getElapsedTime();
+      const time = clock.getElapsedTime();
 
       if (!prefersReducedMotion) {
         // Inertia dampening for mouse
@@ -298,34 +271,40 @@ export default function ThreeCanvas() {
         currentY += (targetY - currentY) * 0.06;
 
         if (!isDragging) {
-          masterGroup.rotation.y = elapsedTime * 0.18 + currentX + scrollYOffset * 1.5;
-          masterGroup.rotation.x = Math.sin(elapsedTime * 0.12) * 0.18 + currentY * 0.5;
+          masterGroup.rotation.y = time * 0.16 + currentX + scrollYOffset * 1.2;
+          masterGroup.rotation.x = Math.sin(time * 0.14) * 0.15 + currentY * 0.45;
         }
 
-        // Orbital ring counter rotations
-        ringMesh1.rotation.z = elapsedTime * 0.22;
-        ringMesh2.rotation.x = -elapsedTime * 0.26;
-        ringMesh3.rotation.y = elapsedTime * 0.15;
+        // Floating respiration
+        masterGroup.position.y = Math.sin(time * 0.9) * 0.22;
 
-        // Inner core rotation
-        innerMesh.rotation.y = -elapsedTime * 0.42;
-        innerMesh.rotation.z = elapsedTime * 0.32;
+        // Core polyhedral rotation
+        coreMesh.rotation.y = -time * 0.2;
+        coreMesh.rotation.z = time * 0.15;
+        cageMesh.rotation.y = time * 0.25;
+        innerMesh.rotation.y = -time * 0.45;
+        innerMesh.rotation.x = time * 0.3;
 
-        // Core scale pulse
-        const pulse = 1 + Math.sin(elapsedTime * 1.6) * 0.035;
-        coreMesh.scale.set(pulse, pulse, pulse);
-        nucleusMesh.scale.set(pulse * 1.05, pulse * 1.05, pulse * 1.05);
+        // Core breathing pulse
+        const pulse = 1 + Math.sin(time * 1.8) * 0.035;
+        nucleusMesh.scale.set(pulse, pulse, pulse);
 
-        // Orbiting data satellites
-        packets.forEach((p) => {
-          p.angle += delta * p.speed;
-          p.mesh.position.x = Math.cos(p.angle) * p.radius * Math.cos(p.inclination);
-          p.mesh.position.y = Math.sin(p.angle) * p.radius;
-          p.mesh.position.z = Math.cos(p.angle) * p.radius * Math.sin(p.inclination);
+        // Gimbal ring rotations
+        ring1Mesh.rotation.z = time * 0.22;
+        ring2Mesh.rotation.x = -time * 0.26;
+
+        // Levitating shards orbital float
+        shards.forEach((s) => {
+          const curAngle = s.baseAngle + time * s.speed;
+          s.group.position.x = Math.cos(curAngle) * s.radius;
+          s.group.position.z = Math.sin(curAngle) * s.radius;
+          s.group.position.y = s.baseY + Math.sin(time * 1.5 + s.radius) * 0.45;
+          s.group.rotation.x = time * s.rotSpeed;
+          s.group.rotation.y = time * (s.rotSpeed * 0.8);
         });
 
-        // Ambient particles slow drift
-        ambientPoints.rotation.y = elapsedTime * 0.04;
+        // Slow stardust drift
+        particlePoints.rotation.y = time * 0.04;
       }
 
       renderer.render(scene, camera);
@@ -333,41 +312,35 @@ export default function ThreeCanvas() {
 
     animate();
 
-    // Cleanup on unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
       if (container) {
-        container.removeEventListener('mousedown', handleMouseDown);
-        if (renderer.domElement) {
-          container.removeChild(renderer.domElement);
-        }
+        container.removeEventListener('mousedown', onMouseDown);
+        if (renderer.domElement) container.removeChild(renderer.domElement);
       }
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
 
-      coreGeometry.dispose();
-      coreMaterial.dispose();
-      innerGeometry.dispose();
-      innerMaterial.dispose();
-      nucleusGeometry.dispose();
-      nucleusMaterial.dispose();
-      ringGeometry1.dispose();
-      ringMaterial1.dispose();
-      ringGeometry2.dispose();
-      ringMaterial2.dispose();
-      ringGeometry3.dispose();
-      ringMaterial3.dispose();
-      nodeGeometry.dispose();
-      nodeMaterial.dispose();
-      lineGeometry.dispose();
-      lineMaterial.dispose();
-      ambientGeometry.dispose();
-      ambientMaterial.dispose();
-      packetGeometry.dispose();
-      packetMaterial.dispose();
+      coreGeom.dispose();
+      coreMat.dispose();
+      cageGeom.dispose();
+      cageMat.dispose();
+      innerGeom.dispose();
+      innerMat.dispose();
+      nucleusGeom.dispose();
+      nucleusMat.dispose();
+      ring1Geom.dispose();
+      ring1Mat.dispose();
+      ring2Geom.dispose();
+      ring2Mat.dispose();
+      shardGeom.dispose();
+      shardMat.dispose();
+      shardWireMat.dispose();
+      particleGeom.dispose();
+      particleMat.dispose();
       renderer.dispose();
     };
   }, []);
@@ -376,7 +349,7 @@ export default function ThreeCanvas() {
     <div
       ref={mountRef}
       className="w-full h-full min-h-[360px] md:min-h-[440px] relative cursor-grab active:cursor-grabbing select-none"
-      aria-label="Interactive 3D System Topology Mesh"
+      aria-label="Interactive 3D Digital Intelligence Sculpture"
     />
   );
 }
