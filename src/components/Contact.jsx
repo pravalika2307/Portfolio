@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Copy, Check, Send, Download, ArrowUpRight, MapPin } from 'lucide-react';
+import { Mail, Copy, Check, Send, Download, ArrowUpRight, MapPin, Loader2, AlertCircle, RotateCcw } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
 import Card3DTilt from './Card3DTilt';
 import MagneticButton from './MagneticButton';
@@ -10,7 +10,8 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'success' | 'error'
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(CONFIG.email);
@@ -20,28 +21,107 @@ export default function Contact() {
 
   const validate = () => {
     const errs = {};
-    if (!formData.name.trim()) errs.name = 'Please provide your name.';
-    if (!formData.email.trim()) {
-      errs.email = 'Please provide your email address.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errs.email = 'Please enter a valid email address.';
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName) {
+      errs.name = 'Please provide your name.';
+    } else if (trimmedName.length < 2) {
+      errs.name = 'Name must be at least 2 characters.';
     }
-    if (!formData.message.trim()) errs.message = 'Please include a message.';
+
+    if (!trimmedEmail) {
+      errs.email = 'Please provide your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      errs.email = 'Please enter a valid email address (e.g. name@domain.com).';
+    }
+
+    if (!trimmedMessage) {
+      errs.message = 'Please include a message.';
+    } else if (trimmedMessage.length < 10) {
+      errs.message = 'Message must be at least 10 characters.';
+    }
+
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[field];
+        return updated;
+      });
+    }
+    if (submitStatus === 'error') {
+      setSubmitStatus('idle');
+      setErrorMessage('');
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevent duplicate submissions while in-flight
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    setErrorMessage('');
+    setSubmitStatus('idle');
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || CONFIG.web3formsAccessKey;
+
+    if (!accessKey) {
       setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setSubmitted(false), 6000);
-    }, 1200);
+      setSubmitStatus('error');
+      setErrorMessage(
+        'Web3Forms access key is not yet configured. Please set VITE_WEB3FORMS_ACCESS_KEY in your environment, or reach out directly to pravalikareddy722@gmail.com.'
+      );
+      return;
+    }
+
+    try {
+      const payload = {
+        access_key: accessKey,
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim() || `Portfolio Transmission from ${formData.name.trim()}`,
+        message: formData.message.trim(),
+        from_name: 'Pravalika Portfolio Contact',
+        botcheck: false
+      };
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (response.status === 200 && result.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setErrors({});
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(
+          result.message || 'Transmission could not be dispatched. Please try again or email directly.'
+        );
+      }
+    } catch {
+      setSubmitStatus('error');
+      setErrorMessage(
+        'Network error: Unable to connect to transmission gateway. Please check your internet connection or email directly.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -184,99 +264,175 @@ export default function Contact() {
 
           </div>
 
-          {/* Right Column: Transmission Form */}
+          {/* Right Column: Transmission Form with Web3Forms Integration */}
           <div className="lg:col-span-7">
             <Card3DTilt maxTilt={3} className="obsidian-panel rounded-3xl p-6 sm:p-8 border border-white/5 shadow-xl relative preserve-3d">
               <h3 className="text-xl font-bold font-heading text-[#F5F2EE] mb-1 translate-z-20">
                 Dispatch Message
               </h3>
               <p className="text-xs font-technical-mono text-[#99969A] mb-6 translate-z-10">
-                Direct transmission to pravalikareddy722@gmail.com
+                Direct transmission to {CONFIG.email} via Web3Forms
               </p>
 
-              {submitted ? (
-                <div className="p-6 rounded-2xl bg-[#FF6B35]/10 border border-[#FF6B35]/30 text-center space-y-3 translate-z-20">
-                  <div className="w-10 h-10 rounded-full bg-[#FF6B35]/20 text-[#FF6B35] flex items-center justify-center mx-auto">
-                    <Check className="w-5 h-5" />
+              {/* Success Message Banner */}
+              {submitStatus === 'success' ? (
+                <div className="p-6 sm:p-8 rounded-2xl bg-[#FF6B35]/10 border border-[#FF6B35]/30 text-center space-y-4 translate-z-20">
+                  <div className="w-12 h-12 rounded-full bg-[#FF6B35]/20 text-[#FF6B35] flex items-center justify-center mx-auto shadow-lg shadow-[#FF6B35]/20">
+                    <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-base font-bold text-[#F5F2EE] font-heading">
-                    Transmission Dispatched Successfully
-                  </h4>
-                  <p className="text-xs text-[#99969A] max-w-sm mx-auto font-sans">
-                    Thank you for reaching out! I will review your message and reply promptly.
-                  </p>
+                  <div className="space-y-1.5">
+                    <h4 className="text-lg font-bold text-[#F5F2EE] font-heading">
+                      Transmission Dispatched Successfully
+                    </h4>
+                    <p className="text-xs sm:text-sm text-[#99969A] max-w-md mx-auto font-sans leading-relaxed">
+                      Thank you for reaching out! Your message has been routed to{' '}
+                      <span className="text-[#FFB36B] font-semibold">{CONFIG.email}</span>. I will review it and reply shortly.
+                    </p>
+                  </div>
+                  <div className="pt-2">
+                    <button
+                      onClick={() => setSubmitStatus('idle')}
+                      className="px-4 py-2 rounded-xl bg-[#1C1C20] hover:bg-[#FF6B35]/15 border border-white/10 hover:border-[#FF6B35]/40 text-xs font-technical-mono text-[#F5F2EE] transition-colors inline-flex items-center space-x-1.5 cursor-pointer"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5 text-[#FF6B35]" />
+                      <span>Dispatch Another Transmission</span>
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 font-technical-mono translate-z-10">
+                <form onSubmit={handleSubmit} noValidate className="space-y-4 font-technical-mono translate-z-10">
+                  {/* Honeypot Spam Filter (Hidden from Users) */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    tabIndex="-1"
+                    autoComplete="off"
+                    className="hidden"
+                    style={{ display: 'none' }}
+                  />
+
+                  {/* Error Notification Banner */}
+                  {submitStatus === 'error' && (
+                    <div className="p-4 rounded-xl bg-[#FF6B35]/15 border border-[#FF6B35]/40 text-xs space-y-2">
+                      <div className="flex items-start space-x-2 text-[#FF6B35] font-bold">
+                        <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <span>Transmission Gateway Notice</span>
+                      </div>
+                      <p className="text-[#F5F2EE]/90 leading-relaxed font-sans text-xs">
+                        {errorMessage}
+                      </p>
+                      <div className="pt-1">
+                        <a
+                          href={`mailto:${CONFIG.email}?subject=${encodeURIComponent(
+                            formData.subject || 'Portfolio Inquiry'
+                          )}&body=${encodeURIComponent(formData.message || '')}`}
+                          className="text-[#FFB36B] hover:text-[#FF6B35] underline font-semibold flex items-center space-x-1 text-xs"
+                        >
+                          <span>Click here to send directly via your email client &rarr;</span>
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Name and Email Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label htmlFor="contact-name" className="text-xs text-[#99969A]">
+                      <label htmlFor="contact-name" className="text-xs text-[#99969A] block">
                         Your Name *
                       </label>
                       <input
                         id="contact-name"
+                        name="name"
                         type="text"
+                        disabled={isSubmitting}
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) => handleChange('name', e.target.value)}
                         placeholder="Alex Morgan"
-                        className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors"
+                        aria-invalid={Boolean(errors.name)}
+                        className={`w-full bg-[#151518] border rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors disabled:opacity-50 ${
+                          errors.name ? 'border-[#FF6B35]' : 'border-white/10 focus:border-[#FF6B35]'
+                        }`}
                       />
-                      {errors.name && <span className="text-[11px] text-[#FF6B35]">{errors.name}</span>}
+                      {errors.name && (
+                        <span className="text-[11px] text-[#FF6B35] block mt-0.5">{errors.name}</span>
+                      )}
                     </div>
 
                     <div className="space-y-1">
-                      <label htmlFor="contact-email" className="text-xs text-[#99969A]">
+                      <label htmlFor="contact-email" className="text-xs text-[#99969A] block">
                         Your Email *
                       </label>
                       <input
                         id="contact-email"
+                        name="email"
                         type="email"
+                        disabled={isSubmitting}
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) => handleChange('email', e.target.value)}
                         placeholder="alex@company.com"
-                        className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors"
+                        aria-invalid={Boolean(errors.email)}
+                        className={`w-full bg-[#151518] border rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors disabled:opacity-50 ${
+                          errors.email ? 'border-[#FF6B35]' : 'border-white/10 focus:border-[#FF6B35]'
+                        }`}
                       />
-                      {errors.email && <span className="text-[11px] text-[#FF6B35]">{errors.email}</span>}
+                      {errors.email && (
+                        <span className="text-[11px] text-[#FF6B35] block mt-0.5">{errors.email}</span>
+                      )}
                     </div>
                   </div>
 
+                  {/* Subject Field */}
                   <div className="space-y-1">
-                    <label htmlFor="contact-subject" className="text-xs text-[#99969A]">
-                      Subject
+                    <label htmlFor="contact-subject" className="text-xs text-[#99969A] block">
+                      Subject <span className="text-[#99969A]/60">(Optional)</span>
                     </label>
                     <input
                       id="contact-subject"
+                      name="subject"
                       type="text"
+                      disabled={isSubmitting}
                       value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      onChange={(e) => handleChange('subject', e.target.value)}
                       placeholder="Software Engineer Role / Project"
-                      className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors"
+                      className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors disabled:opacity-50"
                     />
                   </div>
 
+                  {/* Message Field */}
                   <div className="space-y-1">
-                    <label htmlFor="contact-message" className="text-xs text-[#99969A]">
+                    <label htmlFor="contact-message" className="text-xs text-[#99969A] block">
                       Message *
                     </label>
                     <textarea
                       id="contact-message"
+                      name="message"
                       rows={4}
+                      disabled={isSubmitting}
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) => handleChange('message', e.target.value)}
                       placeholder="Hi Pravalika, I came across your portfolio and wanted to discuss..."
-                      className="w-full bg-[#151518] border border-white/10 focus:border-[#FF6B35] rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors resize-none font-sans"
+                      aria-invalid={Boolean(errors.message)}
+                      className={`w-full bg-[#151518] border rounded-xl px-4 py-2.5 text-xs text-[#F5F2EE] placeholder-[#99969A]/50 outline-none transition-colors resize-none font-sans disabled:opacity-50 ${
+                        errors.message ? 'border-[#FF6B35]' : 'border-white/10 focus:border-[#FF6B35]'
+                      }`}
                     />
-                    {errors.message && <span className="text-[11px] text-[#FF6B35]">{errors.message}</span>}
+                    {errors.message && (
+                      <span className="text-[11px] text-[#FF6B35] block mt-0.5">{errors.message}</span>
+                    )}
                   </div>
 
+                  {/* Submit Button */}
                   <MagneticButton strength={0.15} className="w-full">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-3.5 rounded-xl bg-[#FF6B35] hover:bg-[#FFB36B] text-[#0B0B0D] font-bold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#FF6B35]/20 disabled:opacity-70"
+                      className="w-full py-3.5 rounded-xl bg-[#FF6B35] hover:bg-[#FFB36B] text-[#0B0B0D] font-bold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#FF6B35]/20 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
-                        <span>Transmitting...</span>
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-[#0B0B0D]" />
+                          <span>Transmitting...</span>
+                        </>
                       ) : (
                         <>
                           <span>Send Transmission</span>

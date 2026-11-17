@@ -9,6 +9,7 @@ export const CONFIG = {
   location: "Hyderabad, India",
   resumePath: "/resume.pdf",
   resumeFileName: "resume.pdf",
+  web3formsAccessKey: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "",
 
   heroStatement: "Building resilient full-stack systems, high-throughput APIs, and applied AI automation with engineering precision.",
 
