@@ -4,6 +4,7 @@ import {
   Code2, Layout, Server, Database, BrainCircuit, 
   CheckSquare, Wrench, Search 
 } from 'lucide-react';
+import Card3DTilt from './Card3DTilt';
 import { CONFIG } from '../config';
 
 const categoryIcons = {
@@ -55,7 +56,7 @@ export default function Skills() {
               <span className="w-8 h-px bg-[#FF6B35]/40" />
               <span>Technical Capabilities</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[#F5F2EE]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading tracking-tight text-[#F5F2EE]">
               Technical Repertoire
             </h2>
             <p className="text-[#99969A] text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
@@ -102,42 +103,44 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: idx * 0.05 }}
-              className="obsidian-panel obsidian-panel-interactive rounded-2xl p-6 border border-white/5 flex flex-col justify-between group"
+              className="h-full"
             >
-              <div className="space-y-4">
-                {/* Header */}
-                <div className="flex items-center space-x-3 pb-3 border-b border-white/5">
-                  <div className="w-9 h-9 rounded-xl bg-[#151518] border border-white/5 flex items-center justify-center group-hover:scale-105 transition-transform">
-                    {categoryIcons[cat.category] || <Code2 className="w-5 h-5 text-[#FF6B35]" />}
+              <Card3DTilt maxTilt={6} className="obsidian-panel obsidian-panel-interactive rounded-2xl p-6 border border-white/5 flex flex-col justify-between group h-full preserve-3d">
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="flex items-center space-x-3 pb-3 border-b border-white/5 translate-z-10">
+                    <div className="w-9 h-9 rounded-xl bg-[#151518] border border-white/5 flex items-center justify-center group-hover:scale-105 transition-transform">
+                      {categoryIcons[cat.category] || <Code2 className="w-5 h-5 text-[#FF6B35]" />}
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold font-heading text-[#F5F2EE] group-hover:text-[#FFB36B] transition-colors">
+                        {cat.category}
+                      </h3>
+                      <p className="text-[11px] font-technical-mono text-[#99969A]">
+                        {cat.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold font-display text-[#F5F2EE] group-hover:text-[#FFB36B] transition-colors">
-                      {cat.category}
-                    </h3>
-                    <p className="text-[11px] font-technical-mono text-[#99969A]">
-                      {cat.description}
-                    </p>
+
+                  {/* Skill Chips */}
+                  <div className="flex flex-wrap gap-2 pt-1 translate-z-20">
+                    {(searchTerm.trim() ? cat.matchingSkills : cat.skills).map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 rounded-lg bg-[#151518] border border-white/5 text-xs font-technical-mono text-[#F5F2EE] group-hover:border-white/10 hover:border-[#FF6B35]/40 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Skill Chips */}
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {(searchTerm.trim() ? cat.matchingSkills : cat.skills).map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1.5 rounded-lg bg-[#151518] border border-white/5 text-xs font-technical-mono text-[#F5F2EE] group-hover:border-white/10 transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                {/* Count Footer */}
+                <div className="pt-4 mt-6 border-t border-white/5 flex items-center justify-between text-[11px] font-technical-mono text-[#99969A] translate-z-10">
+                  <span>{cat.skills.length} competencies</span>
+                  <span className="text-[#FF6B35] font-semibold">Active Practice</span>
                 </div>
-              </div>
-
-              {/* Count Footer */}
-              <div className="pt-4 mt-6 border-t border-white/5 flex items-center justify-between text-[11px] font-technical-mono text-[#99969A]">
-                <span>{cat.skills.length} competencies</span>
-                <span className="text-[#FF6B35] font-semibold">Active Practice</span>
-              </div>
+              </Card3DTilt>
             </motion.div>
           ))}
         </div>

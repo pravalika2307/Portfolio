@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { GithubIcon } from './BrandIcons';
+import Card3DTilt from './Card3DTilt';
+import MagneticButton from './MagneticButton';
 import { CONFIG } from '../config';
 
 export default function Projects() {
@@ -42,7 +44,7 @@ export default function Projects() {
               <span className="w-8 h-px bg-[#FF6B35]/40" />
               <span>Selected Works & Architectures</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[#F5F2EE]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading tracking-tight text-[#F5F2EE]">
               Featured Engineering Projects
             </h2>
             <p className="text-[#99969A] text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
@@ -68,14 +70,14 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* 1. FLAGSHIP SPOTLIGHT SHOWCASE: SynapseIQ */}
+        {/* 1. FLAGSHIP SPOTLIGHT SHOWCASE: SynapseIQ in 3D Perspective Tilt */}
         {flagship && (activeFilter === 'all' || activeFilter === 'ai') && (
-          <div className="obsidian-panel rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#FF6B35]/30 shadow-2xl relative overflow-hidden group">
+          <Card3DTilt maxTilt={4} className="obsidian-panel rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#FF6B35]/30 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#FF6B35]/5 blur-[120px] pointer-events-none rounded-full" />
 
             {/* Flagship Top Header Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/5">
-              <div className="flex items-center space-x-3">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/5 preserve-3d">
+              <div className="flex items-center space-x-3 translate-z-20">
                 <span className="px-3 py-1 rounded-full text-xs font-bold font-technical-mono uppercase tracking-wider bg-[#FF6B35]/15 border border-[#FF6B35]/40 text-[#FF6B35]">
                   ★ Flagship Platform
                 </span>
@@ -84,27 +86,31 @@ export default function Projects() {
                 </span>
               </div>
 
-              <div className="flex items-center space-x-3">
-                <a
-                  href={flagship.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-1.5 text-xs font-technical-mono font-semibold text-[#F5F2EE] hover:text-white bg-[#151518] border border-white/10 hover:border-white/20 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
-                >
-                  <GithubIcon className="w-3.5 h-3.5" />
-                  <span>GitHub</span>
-                </a>
-
-                {flagship.live && (
+              <div className="flex items-center space-x-3 translate-z-20">
+                <MagneticButton strength={0.2}>
                   <a
-                    href={flagship.live}
+                    href={flagship.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-1.5 text-xs font-technical-mono font-bold text-[#0B0B0D] bg-[#FF6B35] hover:bg-[#FFB36B] px-4 py-2 rounded-lg transition-colors shadow-sm cursor-pointer"
+                    className="flex items-center space-x-1.5 text-xs font-technical-mono font-semibold text-[#F5F2EE] hover:text-white bg-[#151518] border border-white/10 hover:border-white/20 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
                   >
-                    <span>Live Platform</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <GithubIcon className="w-3.5 h-3.5" />
+                    <span>GitHub</span>
                   </a>
+                </MagneticButton>
+
+                {flagship.live && (
+                  <MagneticButton strength={0.2}>
+                    <a
+                      href={flagship.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1.5 text-xs font-technical-mono font-bold text-[#0B0B0D] bg-[#FF6B35] hover:bg-[#FFB36B] px-4 py-2 rounded-lg transition-colors shadow-sm cursor-pointer"
+                    >
+                      <span>Live Platform</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </MagneticButton>
                 )}
               </div>
             </div>
@@ -296,10 +302,10 @@ export default function Projects() {
               </div>
 
             </div>
-          </div>
+          </Card3DTilt>
         )}
 
-        {/* 2. OTHER FEATURED & SPECIALIZED PROJECTS (Asymmetric Visual Cards) */}
+        {/* 2. OTHER FEATURED & SPECIALIZED PROJECTS (Interactive 3D Perspective Cards) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {otherProjects.map((project) => (
             <motion.div
@@ -309,92 +315,98 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              className="obsidian-panel obsidian-panel-interactive rounded-2xl p-6 flex flex-col justify-between border border-white/5 group relative"
+              className="h-full"
             >
-              <div className="space-y-4">
-                {/* Header: Badge & Category */}
-                <div className="flex items-center justify-between">
-                  <span className={`text-[10px] font-technical-mono font-bold uppercase px-2.5 py-0.5 rounded-full border ${
-                    project.badge.includes('Hackathon') 
-                      ? 'bg-[#FF6B35]/10 text-[#FF6B35] border-[#FF6B35]/30'
-                      : project.badge.includes('Architecture') || project.badge.includes('Systems')
-                      ? 'bg-[#FFB36B]/10 text-[#FFB36B] border-[#FFB36B]/30'
-                      : 'bg-white/5 text-[#F5F2EE] border-white/10'
-                  }`}>
-                    {project.badge}
-                  </span>
-                  <span className="text-[11px] font-technical-mono text-[#99969A]">
-                    {project.category}
-                  </span>
-                </div>
+              <Card3DTilt maxTilt={7} className="obsidian-panel obsidian-panel-interactive rounded-2xl p-6 flex flex-col justify-between border border-white/5 group h-full preserve-3d">
+                <div className="space-y-4">
+                  {/* Header: Badge & Category */}
+                  <div className="flex items-center justify-between translate-z-10">
+                    <span className={`text-[10px] font-technical-mono font-bold uppercase px-2.5 py-0.5 rounded-full border ${
+                      project.badge.includes('Hackathon') 
+                        ? 'bg-[#FF6B35]/10 text-[#FF6B35] border-[#FF6B35]/30'
+                        : project.badge.includes('Architecture') || project.badge.includes('Systems')
+                        ? 'bg-[#FFB36B]/10 text-[#FFB36B] border-[#FFB36B]/30'
+                        : 'bg-white/5 text-[#F5F2EE] border-white/10'
+                    }`}>
+                      {project.badge}
+                    </span>
+                    <span className="text-[11px] font-technical-mono text-[#99969A]">
+                      {project.category}
+                    </span>
+                  </div>
 
-                {/* Title & Tagline */}
-                <div>
-                  <h3 className="text-xl font-bold font-display text-[#F5F2EE] group-hover:text-[#FFB36B] transition-colors">
-                    {project.title}
-                  </h3>
-                  <div className="text-xs font-technical-mono text-[#FF6B35] mt-0.5">
-                    {project.tagline}
+                  {/* Title & Tagline */}
+                  <div className="translate-z-20">
+                    <h3 className="text-xl font-bold font-heading text-[#F5F2EE] group-hover:text-[#FFB36B] transition-colors">
+                      {project.title}
+                    </h3>
+                    <div className="text-xs font-technical-mono text-[#FF6B35] mt-0.5">
+                      {project.tagline}
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-[#99969A] leading-relaxed font-normal translate-z-10">
+                    {project.description}
+                  </p>
+
+                  {/* Key Metrics */}
+                  <div className="grid grid-cols-2 gap-2 pt-1 font-technical-mono text-[11px] translate-z-10">
+                    {project.metrics.slice(0, 2).map((m, idx) => (
+                      <div key={idx} className="p-2 rounded-lg bg-[#151518] border border-white/5">
+                        <span className="text-[#99969A] text-[10px] block">{m.label}</span>
+                        <span className="text-[#F5F2EE] font-semibold mt-0.5 block truncate">{m.value}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-[#99969A] leading-relaxed font-normal">
-                  {project.description}
-                </p>
+                {/* Footer: Tech Badges & GitHub Links */}
+                <div className="pt-5 mt-6 border-t border-white/5 space-y-4 translate-z-20">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 rounded bg-[#151518] border border-white/5 text-[10px] font-technical-mono text-[#99969A]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
 
-                {/* Key Metrics */}
-                <div className="grid grid-cols-2 gap-2 pt-1 font-technical-mono text-[11px]">
-                  {project.metrics.slice(0, 2).map((m, idx) => (
-                    <div key={idx} className="p-2 rounded-lg bg-[#151518] border border-white/5">
-                      <span className="text-[#99969A] text-[10px] block">{m.label}</span>
-                      <span className="text-[#F5F2EE] font-semibold mt-0.5 block truncate">{m.value}</span>
-                    </div>
-                  ))}
+                  <div className="flex items-center justify-between pt-1 font-technical-mono">
+                    <MagneticButton strength={0.25}>
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-1.5 text-xs text-[#F5F2EE] hover:text-[#FF6B35] transition-colors cursor-pointer"
+                      >
+                        <GithubIcon className="w-3.5 h-3.5 text-[#99969A] group-hover:text-[#FF6B35]" />
+                        <span>Repository</span>
+                      </a>
+                    </MagneticButton>
+
+                    {project.live ? (
+                      <MagneticButton strength={0.25}>
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-1 text-xs font-semibold text-[#FF6B35] hover:text-[#FFB36B] cursor-pointer"
+                        >
+                          <span>Preview</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </MagneticButton>
+                    ) : (
+                      <span className="text-[10px] text-[#99969A]">
+                        Shipped
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-
-              {/* Footer: Tech Badges & GitHub Links */}
-              <div className="pt-5 mt-6 border-t border-white/5 space-y-4">
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded bg-[#151518] border border-white/5 text-[10px] font-technical-mono text-[#99969A]"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between pt-1 font-technical-mono">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-1.5 text-xs text-[#F5F2EE] hover:text-[#FF6B35] transition-colors cursor-pointer"
-                  >
-                    <GithubIcon className="w-3.5 h-3.5 text-[#99969A] group-hover:text-[#FF6B35]" />
-                    <span>Repository</span>
-                  </a>
-
-                  {project.live ? (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-xs font-semibold text-[#FF6B35] hover:text-[#FFB36B] cursor-pointer"
-                    >
-                      <span>Preview</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  ) : (
-                    <span className="text-[10px] text-[#99969A]">
-                      Shipped
-                    </span>
-                  )}
-                </div>
-              </div>
+              </Card3DTilt>
             </motion.div>
           ))}
         </div>

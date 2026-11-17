@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Mail, Copy, Check, Send, Download, ArrowUpRight, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
+import Card3DTilt from './Card3DTilt';
+import MagneticButton from './MagneticButton';
 import { CONFIG } from '../config';
 
 export default function Contact() {
@@ -56,7 +58,7 @@ export default function Contact() {
             <span className="w-8 h-px bg-[#FF6B35]/40" />
             <span>Direct Communication</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[#F5F2EE]">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading tracking-tight text-[#F5F2EE]">
             Initiate Conversation
           </h2>
           <p className="text-[#99969A] text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
@@ -71,8 +73,8 @@ export default function Contact() {
           <div className="lg:col-span-5 space-y-5">
             
             {/* Email Card with Quick Copy */}
-            <div className="obsidian-panel rounded-2xl p-6 border border-white/5 space-y-4">
-              <div className="flex items-center justify-between">
+            <Card3DTilt maxTilt={5} className="obsidian-panel rounded-2xl p-6 border border-white/5 space-y-4 preserve-3d">
+              <div className="flex items-center justify-between translate-z-10">
                 <div className="flex items-center space-x-2 text-xs font-technical-mono text-[#FF6B35]">
                   <Mail className="w-4 h-4" />
                   <span>Direct Transmission</span>
@@ -95,7 +97,7 @@ export default function Contact() {
                 </button>
               </div>
 
-              <div>
+              <div className="translate-z-20">
                 <a
                   href={`mailto:${CONFIG.email}`}
                   className="text-base sm:text-lg font-technical-mono font-bold text-[#F5F2EE] hover:text-[#FFB36B] transition-colors break-all"
@@ -106,90 +108,98 @@ export default function Contact() {
                   Fastest channel for direct inquiries and technical interview scheduling.
                 </p>
               </div>
-            </div>
+            </Card3DTilt>
 
             {/* Social & Professional Ledger */}
             <div className="grid grid-cols-2 gap-4 font-technical-mono">
-              <a
-                href={CONFIG.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="obsidian-panel obsidian-panel-interactive rounded-2xl p-5 border border-white/5 flex flex-col justify-between group"
-              >
-                <div className="flex items-center justify-between">
-                  <GithubIcon className="w-5 h-5 text-[#99969A] group-hover:text-[#F5F2EE] transition-colors" />
-                  <ArrowUpRight className="w-4 h-4 text-[#99969A] group-hover:text-[#FF6B35] transition-colors" />
-                </div>
-                <div className="pt-4">
-                  <span className="text-xs text-[#99969A]">GitHub</span>
-                  <div className="text-sm font-bold text-[#F5F2EE] mt-0.5 truncate">@pravalika2307</div>
-                </div>
-              </a>
+              <Card3DTilt maxTilt={7} className="h-full">
+                <a
+                  href={CONFIG.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="obsidian-panel obsidian-panel-interactive rounded-2xl p-5 border border-white/5 flex flex-col justify-between group h-full preserve-3d block"
+                >
+                  <div className="flex items-center justify-between translate-z-10">
+                    <GithubIcon className="w-5 h-5 text-[#99969A] group-hover:text-[#F5F2EE] transition-colors" />
+                    <ArrowUpRight className="w-4 h-4 text-[#99969A] group-hover:text-[#FF6B35] transition-colors" />
+                  </div>
+                  <div className="pt-4 translate-z-20">
+                    <span className="text-xs text-[#99969A]">GitHub</span>
+                    <div className="text-sm font-bold text-[#F5F2EE] mt-0.5 truncate">@pravalika2307</div>
+                  </div>
+                </a>
+              </Card3DTilt>
 
-              <a
-                href={CONFIG.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="obsidian-panel obsidian-panel-interactive rounded-2xl p-5 border border-white/5 flex flex-col justify-between group"
-              >
-                <div className="flex items-center justify-between">
-                  <LinkedinIcon className="w-5 h-5 text-[#FFB36B]" />
-                  <ArrowUpRight className="w-4 h-4 text-[#99969A] group-hover:text-[#FF6B35] transition-colors" />
-                </div>
-                <div className="pt-4">
-                  <span className="text-xs text-[#99969A]">LinkedIn</span>
-                  <div className="text-sm font-bold text-[#F5F2EE] mt-0.5 truncate">Pravalika Palle</div>
-                </div>
-              </a>
+              <Card3DTilt maxTilt={7} className="h-full">
+                <a
+                  href={CONFIG.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="obsidian-panel obsidian-panel-interactive rounded-2xl p-5 border border-white/5 flex flex-col justify-between group h-full preserve-3d block"
+                >
+                  <div className="flex items-center justify-between translate-z-10">
+                    <LinkedinIcon className="w-5 h-5 text-[#FFB36B]" />
+                    <ArrowUpRight className="w-4 h-4 text-[#99969A] group-hover:text-[#FF6B35] transition-colors" />
+                  </div>
+                  <div className="pt-4 translate-z-20">
+                    <span className="text-xs text-[#99969A]">LinkedIn</span>
+                    <div className="text-sm font-bold text-[#F5F2EE] mt-0.5 truncate">Pravalika Palle</div>
+                  </div>
+                </a>
+              </Card3DTilt>
             </div>
 
             {/* Location & Resume Box */}
-            <div className="obsidian-panel rounded-2xl p-6 border border-white/5 space-y-4 font-technical-mono">
-              <div className="flex items-center space-x-2 text-xs text-[#99969A]">
+            <Card3DTilt maxTilt={4} className="obsidian-panel rounded-2xl p-6 border border-white/5 space-y-4 font-technical-mono preserve-3d">
+              <div className="flex items-center space-x-2 text-xs text-[#99969A] translate-z-10">
                 <MapPin className="w-4 h-4 text-[#FF6B35]" />
                 <span>Base Location: Hyderabad, India</span>
               </div>
 
-              <div className="flex items-center gap-3 pt-1">
-                <a
-                  href={CONFIG.resumePath}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-[#151518] border border-white/5 text-xs font-semibold text-[#F5F2EE] hover:text-white hover:border-[#FF6B35]/50 transition-colors"
-                >
-                  <span>View Resume</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
-                </a>
+              <div className="flex items-center gap-3 pt-1 translate-z-20">
+                <MagneticButton strength={0.25} className="flex-1">
+                  <a
+                    href={CONFIG.resumePath}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-[#151518] border border-white/5 text-xs font-semibold text-[#F5F2EE] hover:text-white hover:border-[#FF6B35]/50 transition-colors"
+                  >
+                    <span>View Resume</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
+                  </a>
+                </MagneticButton>
 
-                <a
-                  href={CONFIG.resumePath}
-                  download={CONFIG.resumeFileName}
-                  className="flex-1 flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] text-xs font-bold transition-colors cursor-pointer"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download CV</span>
-                </a>
+                <MagneticButton strength={0.25} className="flex-1">
+                  <a
+                    href={CONFIG.resumePath}
+                    download={CONFIG.resumeFileName}
+                    className="w-full flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download CV</span>
+                  </a>
+                </MagneticButton>
               </div>
-            </div>
+            </Card3DTilt>
 
           </div>
 
           {/* Right Column: Transmission Form */}
           <div className="lg:col-span-7">
-            <div className="obsidian-panel rounded-3xl p-6 sm:p-8 border border-white/5 shadow-xl relative">
-              <h3 className="text-xl font-bold font-display text-[#F5F2EE] mb-1">
+            <Card3DTilt maxTilt={3} className="obsidian-panel rounded-3xl p-6 sm:p-8 border border-white/5 shadow-xl relative preserve-3d">
+              <h3 className="text-xl font-bold font-heading text-[#F5F2EE] mb-1 translate-z-20">
                 Dispatch Message
               </h3>
-              <p className="text-xs font-technical-mono text-[#99969A] mb-6">
+              <p className="text-xs font-technical-mono text-[#99969A] mb-6 translate-z-10">
                 Direct transmission to pravalikareddy722@gmail.com
               </p>
 
               {submitted ? (
-                <div className="p-6 rounded-2xl bg-[#FF6B35]/10 border border-[#FF6B35]/30 text-center space-y-3">
+                <div className="p-6 rounded-2xl bg-[#FF6B35]/10 border border-[#FF6B35]/30 text-center space-y-3 translate-z-20">
                   <div className="w-10 h-10 rounded-full bg-[#FF6B35]/20 text-[#FF6B35] flex items-center justify-center mx-auto">
                     <Check className="w-5 h-5" />
                   </div>
-                  <h4 className="text-base font-bold text-[#F5F2EE] font-display">
+                  <h4 className="text-base font-bold text-[#F5F2EE] font-heading">
                     Transmission Dispatched Successfully
                   </h4>
                   <p className="text-xs text-[#99969A] max-w-sm mx-auto font-sans">
@@ -197,7 +207,7 @@ export default function Contact() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 font-technical-mono">
+                <form onSubmit={handleSubmit} className="space-y-4 font-technical-mono translate-z-10">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <label htmlFor="contact-name" className="text-xs text-[#99969A]">
@@ -259,23 +269,25 @@ export default function Contact() {
                     {errors.message && <span className="text-[11px] text-[#FF6B35]">{errors.message}</span>}
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3.5 rounded-xl bg-[#FF6B35] hover:bg-[#FFB36B] text-[#0B0B0D] font-bold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#FF6B35]/20 disabled:opacity-70"
-                  >
-                    {isSubmitting ? (
-                      <span>Transmitting...</span>
-                    ) : (
-                      <>
-                        <span>Send Transmission</span>
-                        <Send className="w-3.5 h-3.5" />
-                      </>
-                    )}
-                  </button>
+                  <MagneticButton strength={0.15} className="w-full">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-3.5 rounded-xl bg-[#FF6B35] hover:bg-[#FFB36B] text-[#0B0B0D] font-bold text-xs tracking-wider uppercase transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-md shadow-[#FF6B35]/20 disabled:opacity-70"
+                    >
+                      {isSubmitting ? (
+                        <span>Transmitting...</span>
+                      ) : (
+                        <>
+                          <span>Send Transmission</span>
+                          <Send className="w-3.5 h-3.5" />
+                        </>
+                      )}
+                    </button>
+                  </MagneticButton>
                 </form>
               )}
-            </div>
+            </Card3DTilt>
           </div>
 
         </div>

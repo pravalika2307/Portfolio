@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowUpRight, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
+import MagneticButton from './MagneticButton';
 import { CONFIG } from '../config';
 
 const navLinks = [
@@ -111,43 +112,52 @@ export default function Navbar() {
 
         {/* Resume Actions */}
         <div className="hidden lg:flex items-center space-x-3">
-          <a
-            href={CONFIG.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub Profile"
-            className="p-2 rounded-lg text-[#99969A] hover:text-[#F5F2EE] hover:bg-[#1C1C20] border border-transparent hover:border-white/5 transition-colors"
-          >
-            <GithubIcon className="w-4 h-4" />
-          </a>
-          <a
-            href={CONFIG.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn Profile"
-            className="p-2 rounded-lg text-[#99969A] hover:text-[#FFB36B] hover:bg-[#1C1C20] border border-transparent hover:border-white/5 transition-colors"
-          >
-            <LinkedinIcon className="w-4 h-4" />
-          </a>
-          
-          <a
-            href={CONFIG.resumePath}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg text-xs font-technical-mono font-semibold bg-[#1C1C20] text-[#F5F2EE] border border-white/10 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 transition-colors"
-          >
-            <span>Resume</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
-          </a>
+          <MagneticButton strength={0.3}>
+            <a
+              href={CONFIG.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+              className="p-2 rounded-lg text-[#99969A] hover:text-[#F5F2EE] hover:bg-[#1C1C20] border border-transparent hover:border-white/5 transition-colors block"
+            >
+              <GithubIcon className="w-4 h-4" />
+            </a>
+          </MagneticButton>
 
-          <a
-            href={CONFIG.resumePath}
-            download={CONFIG.resumeFileName}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-technical-mono font-semibold bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] transition-colors cursor-pointer"
-          >
-            <Download className="w-3 h-3" />
-            <span>CV</span>
-          </a>
+          <MagneticButton strength={0.3}>
+            <a
+              href={CONFIG.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              className="p-2 rounded-lg text-[#99969A] hover:text-[#FFB36B] hover:bg-[#1C1C20] border border-transparent hover:border-white/5 transition-colors block"
+            >
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
+          </MagneticButton>
+          
+          <MagneticButton strength={0.25}>
+            <a
+              href={CONFIG.resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg text-xs font-technical-mono font-semibold bg-[#1C1C20] text-[#F5F2EE] border border-white/10 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 transition-colors"
+            >
+              <span>Resume</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
+            </a>
+          </MagneticButton>
+
+          <MagneticButton strength={0.25}>
+            <a
+              href={CONFIG.resumePath}
+              download={CONFIG.resumeFileName}
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-technical-mono font-semibold bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] transition-colors cursor-pointer"
+            >
+              <Download className="w-3 h-3" />
+              <span>CV</span>
+            </a>
+          </MagneticButton>
         </div>
 
         {/* Mobile Menu Button */}

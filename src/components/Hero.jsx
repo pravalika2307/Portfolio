@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Download, ArrowUpRight, Activity, Code2, Loader2 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
+import MagneticButton from './MagneticButton';
 import { CONFIG } from '../config';
 
 const ThreeCanvas = lazy(() => import('./ThreeCanvas'));
@@ -77,11 +78,11 @@ export default function Hero() {
               transition={{ duration: 0.55, delay: 0.1 }}
               className="space-y-3"
             >
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display-hero tracking-tight text-[#F5F2EE] leading-none">
+              <h1 className="text-3xl sm:text-5xl lg:text-[3.75rem] font-bold font-display-hero tracking-tight text-[#F5F2EE] leading-[1.08]">
                 PRAVALIKA PALLE
               </h1>
               
-              <div className="h-9 sm:h-11 flex items-center text-xl sm:text-2xl font-bold font-technical-tag text-[#FF6B35]">
+              <div className="h-9 sm:h-10 flex items-center text-lg sm:text-2xl font-semibold font-technical-mono text-[#FF6B35]">
                 <span>{currentText}</span>
                 <span className="typing-caret" />
               </div>
@@ -118,63 +119,74 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Prominent Action Buttons */}
+            {/* Prominent Action Buttons with Magnetic Physics */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.3 }}
               className="flex flex-wrap items-center gap-3.5 pt-2"
             >
-              <a
-                href="#projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-5 py-3 rounded-xl text-xs font-technical-mono font-bold bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] transition-all duration-200 flex items-center space-x-2 cursor-pointer shadow-lg shadow-[#FF6B35]/15"
-              >
-                <span>View Projects</span>
-                <ArrowDown className="w-3.5 h-3.5" />
-              </a>
+              <MagneticButton>
+                <a
+                  href="#projects"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="px-5 py-3 rounded-xl text-xs font-technical-mono font-bold bg-[#FF6B35] text-[#0B0B0D] hover:bg-[#FFB36B] transition-colors duration-200 flex items-center space-x-2 cursor-pointer shadow-lg shadow-[#FF6B35]/15"
+                >
+                  <span>View Projects</span>
+                  <ArrowDown className="w-3.5 h-3.5" />
+                </a>
+              </MagneticButton>
 
-              <a
-                href={CONFIG.resumePath}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-3 rounded-xl text-xs font-technical-mono font-semibold bg-[#1C1C20] text-[#F5F2EE] hover:text-white border border-white/10 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 transition-all duration-200 flex items-center space-x-2"
-              >
-                <span>View Resume</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
-              </a>
+              <MagneticButton>
+                <a
+                  href={CONFIG.resumePath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-3 rounded-xl text-xs font-technical-mono font-semibold bg-[#1C1C20] text-[#F5F2EE] hover:text-white border border-white/10 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 transition-colors duration-200 flex items-center space-x-2"
+                >
+                  <span>View Resume</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6B35]" />
+                </a>
+              </MagneticButton>
 
-              <a
-                href={CONFIG.resumePath}
-                download={CONFIG.resumeFileName}
-                className="px-4 py-3 rounded-xl text-xs font-technical-mono font-semibold bg-[#151518] text-[#99969A] hover:text-[#F5F2EE] border border-white/5 hover:border-white/15 transition-all duration-200 flex items-center space-x-1.5 cursor-pointer"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download CV</span>
-              </a>
+              <MagneticButton>
+                <a
+                  href={CONFIG.resumePath}
+                  download={CONFIG.resumeFileName}
+                  className="px-4 py-3 rounded-xl text-xs font-technical-mono font-semibold bg-[#151518] text-[#99969A] hover:text-[#F5F2EE] border border-white/5 hover:border-white/15 transition-colors duration-200 flex items-center space-x-1.5 cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download CV</span>
+                </a>
+              </MagneticButton>
 
               <div className="flex items-center space-x-2 pl-2">
-                <a
-                  href={CONFIG.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub Profile"
-                  className="p-3 rounded-xl bg-[#1C1C20] border border-white/5 text-[#99969A] hover:text-[#F5F2EE] hover:border-white/15 transition-all duration-200"
-                >
-                  <GithubIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={CONFIG.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn Profile"
-                  className="p-3 rounded-xl bg-[#1C1C20] border border-white/5 text-[#99969A] hover:text-[#FFB36B] hover:border-white/15 transition-all duration-200"
-                >
-                  <LinkedinIcon className="w-4 h-4" />
-                </a>
+                <MagneticButton strength={0.35}>
+                  <a
+                    href={CONFIG.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub Profile"
+                    className="p-3 rounded-xl bg-[#1C1C20] border border-white/5 text-[#99969A] hover:text-[#F5F2EE] hover:border-white/15 transition-colors duration-200 block"
+                  >
+                    <GithubIcon className="w-4 h-4" />
+                  </a>
+                </MagneticButton>
+
+                <MagneticButton strength={0.35}>
+                  <a
+                    href={CONFIG.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn Profile"
+                    className="p-3 rounded-xl bg-[#1C1C20] border border-white/5 text-[#99969A] hover:text-[#FFB36B] hover:border-white/15 transition-colors duration-200 block"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                  </a>
+                </MagneticButton>
               </div>
             </motion.div>
           </div>
